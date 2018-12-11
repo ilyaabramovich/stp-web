@@ -18,7 +18,7 @@
               </div>
             </div>
             <div class="control">
-              <button class="button is-primary" v-on:click="toggleModal" type="button">Добавить</button>
+              <button class="button is-primary" type="button">Добавить</button>
             </div>
           </div>
           <label class="label" for="chapter">Глава</label>
