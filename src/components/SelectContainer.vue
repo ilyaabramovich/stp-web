@@ -8,57 +8,61 @@
             <slot></slot>
           </div>
         </div>
-        <p v-if="hasAddon" class="control">
-          <Button variant="primary">Добавить</Button>
-          <modal name="modal">
-            <form>
-              <div class="field">
-                <div class="label"></div>
-                <div class="control">
-                  <input type="text" class="input">
+        <div v-if="hasAddon" class="control">
+          <button type="button" class="button is-info" @click="show">Добавить</button>
+          <div class="modal" :class="{'is-active':isActive}">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <button class="delete" aria-label="close" @click="hide"></button>
+              </header>
+              <section class="modal-card-body">
+                <!-- Content ... -->
+                <div class="field">
+                  <div class="label">Введите имя</div>
+                  <div class="control">
+                    <input v-model="name" type="text" class="input">
+                  </div>
                 </div>
-              </div>
-            </form>
-          </modal>
-        </p>
+              </section>
+              <footer class="modal-card-foot">
+                <button class="button is-success" type="button" @click="handleSubmit">Добавить</button>
+              </footer>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Button from "./Button.vue";
 export default {
   name: "SelectContainer",
   props: {
     hasAddon: Boolean,
-    title: String
+    title: String,
+    onSubmit: Function,
+    id: String
   },
-  // created: function() {
-  //   return this.fetchData();
-  // },
-  // data() {
-  //   return {
-  //     model: "",
-  //     test: []
-  //   };
-  // },
-  // methods: {
-  //   fetchData: async function() {
-  //     try {
-  //       const res = await fetch("http://localhost:3000/questions", {
-  //         method: "POST"
-  //       });
-  //       const people = await res.json();
-  //       this.test = people;
-  //     } catch (error) {
-  //       // eslint-disable-next-line
-  //       console.error(error);
-  //     }
-  //   }
-  // },
-  components: {
-    Button
+  data() {
+    return {
+      isActive: false,
+      name: ""
+    };
+  },
+  methods: {
+    show() {
+      this.isActive = true;
+    },
+    handleSubmit: function() {
+      this.onSubmit(this.name);
+      this.name = "";
+      this.hide();
+    },
+    hide() {
+      this.isActive = false;
+    }
   }
 };
 </script>

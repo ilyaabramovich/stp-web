@@ -3,8 +3,8 @@
     <div class="container">
       <div class="box">
         <form>
-          <select-container title="Глава" hasAddon>
-            <select @change="onChapterChange(chapter)" v-model="chapter">
+          <select-container :on-submit="addChapter" title="Глава" hasAddon>
+            <select @change="onChapterChange(chapterId)" v-model="chapterId">
               <option disabled value>Выберите главу</option>
               <option
                 :key="chapter.id"
@@ -13,8 +13,8 @@
               >{{ chapter.name }}</option>
             </select>
           </select-container>
-          <select-container title="Раздел" hasAddon>
-            <select @change="onSectionChange(section)" v-model="section">
+          <select-container :on-submit="addSection" title="Раздел" hasAddon>
+            <select :disabled="!chapterId" @change="onSectionChange(sectionId)" v-model="sectionId">
               <option disabled value>Выберите раздел</option>
               <option
                 :key="section.id"
@@ -23,8 +23,12 @@
               >{{ section.name }}</option>
             </select>
           </select-container>
-          <select-container title="Параграф" hasAddon>
-            <select @change="onParagraphChange(paragraph)" v-model="paragraph">
+          <select-container :on-submit="addParagraph" title="Параграф" hasAddon>
+            <select
+              :disabled="!sectionId"
+              @change="onParagraphChange(paragraphId)"
+              v-model="paragraphId"
+            >
               <option disabled value>Выберите параграф</option>
               <option
                 :key="paragraph.id"
@@ -34,25 +38,25 @@
             </select>
           </select-container>
           <select-container title="Задания" hasAddon>
-            <select v-model="unit">
+            <select :disabled="!paragraphId" v-model="unitId">
               <option disabled value>Выберите задание</option>
               <option
                 :key="unit.id"
                 v-for="unit in units"
                 :value="unit.id"
-              >{{ unit.name }} ({{unit.hint}})</option>
+              >{{ unit.name }} ({{unit.hint}}) Сложность: {{unit.difficulty}}</option>
             </select>
           </select-container>
           <div class="columns">
             <div class="column is-three-quarters">
-              <select-container title="Тип вопроса" hasAddon>
-                <select v-model="questionType">
+              <select-container title="Тип вопроса" :hasAddon="false">
+                <select v-model="typeAnswer">
                   <option disabled value>Выберите тип</option>
                   <option
-                    :key="questionType.id"
-                    v-for="questionType in questionTypes"
-                    :value="questionType.id"
-                  >{{ questionType.name }}</option>
+                    :key="typeAnswer.id"
+                    v-for="typeAnswer in typeAnswers"
+                    :value="typeAnswer.id"
+                  >{{ typeAnswer.name }}</option>
                 </select>
               </select-container>
             </div>
@@ -71,16 +75,43 @@
           </div>
           <textarea-container title="Вопрос">
             <textarea
-              v-model="question"
+              v-model="name"
               placeholder="Введите текст вопроса"
               class="textarea"
               cols="30"
               rows="5"
             ></textarea>
           </textarea-container>
+          <textarea-container title="Подсказка">
+            <textarea
+              v-model="hint"
+              placeholder="Введите подсказку к вопросу"
+              class="textarea"
+              cols="30"
+              rows="5"
+            ></textarea>
+          </textarea-container>
           <div class="field">
+            <label class="label">Введите правильный ответ</label>
             <div class="control">
-              <Button variant="primary">Добавить вопрос</Button>
+              <input type="text" v-model="answer" class="input">
+            </div>
+          </div>
+          <div class="field is-grouped">
+            <div class="control">
+              <button
+                class="button is-success"
+                :disabled="!(answer&&name&&unitId&&hint)"
+                type="button"
+                @click="addQuestion"
+              >Добавить вопрос</button>
+            </div>
+            <div class="control">
+              <button
+                class="button is-primary"
+                type="button"
+                @click="generateJSON"
+              >Сгенерировать JSON</button>
             </div>
           </div>
         </form>
@@ -91,21 +122,78 @@
 
 <script>
 import SelectContainer from "./SelectContainer.vue";
-import Button from "./Button.vue";
 import TextareaContainer from "./TextareaContainer.vue";
+import * as api from "../services/DbService";
 
 export default {
   name: "Form",
   methods: {
-    show() {
-      this.$modal.show("section-modal");
+    generateJSON: function() {
+      return api
+        .generateJSON()
+        .then(res => {
+          alert("JSON сгенерирован!");
+          // eslint-disable-next-line
+          console.log(res.data);
+        }) // eslint-disable-next-line
+        .catch(error => console.error(error));
     },
-    hide() {
-      this.$modal.hide("section-modal");
+    addQuestion: function() {
+      return (
+        api
+          .addQuestion({
+            unitId: this.unitId,
+            name: this.name,
+            hint: this.hint,
+            typeAnswer: this.typeAnswer,
+            answer: this.answer
+          })
+          .then(() => {
+            alert("Вопрос добавлен!");
+            // eslint-disable-next-line
+          })
+          // eslint-disable-next-line
+          .catch(error => console.error(error))
+      );
+    },
+    addChapter: function(name) {
+      return api
+        .addChapter({
+          name
+        })
+        .then(() => {
+          alert("Глава добавлена!");
+          // eslint-disable-next-line
+        }) // eslint-disable-next-line
+        .catch(error => console.error(error));
+    },
+    addSection: function(name) {
+      return api
+        .addSection({
+          name,
+          chapterId: this.chapterId
+        })
+        .then(() => {
+          alert("Раздел добавлен!");
+          // eslint-disable-next-line
+        }) // eslint-disable-next-line
+        .catch(error => console.error(error));
+    },
+    addParagraph: function(name) {
+      return api
+        .addParagraph({
+          name,
+          sectionId: this.sectionId
+        })
+        .then(() => {
+          alert("Параграф добавлен!");
+          // eslint-disable-next-line
+        }) // eslint-disable-next-line
+        .catch(error => console.error(error));
     }
   },
   props: {
-    questionTypes: Array,
+    typeAnswers: Array,
     chapters: Array,
     sections: Array,
     units: Array,
@@ -117,19 +205,20 @@ export default {
   },
   data() {
     return {
-      chapter: "",
-      section: "",
-      paragraph: "",
-      unit: "",
-      question: "",
+      chapterId: "",
+      sectionId: "",
+      paragraphId: "",
+      hint: "",
+      unitId: "",
+      name: "",
       difficulty: "",
-      questionType: ""
+      typeAnswer: "",
+      answer: ""
     };
   },
   components: {
     SelectContainer,
-    TextareaContainer,
-    Button
+    TextareaContainer
   }
 };
 </script>

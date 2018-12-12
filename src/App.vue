@@ -2,12 +2,13 @@
   <div id="app">
     <Header :title="title"/>
     <Form
+      :refetch-chapters="fetchChapters"
       :units="units"
       :paragraphs="paragraphs"
       :chapters="chapters"
       :sections="sections"
       :difficulties="difficulties"
-      :question-types="questionTypes"
+      :type-answers="typeAnswers"
       :on-chapter-change="onChapterChange"
       :on-section-change="onSectionChange"
       :on-paragraph-change="onParagraphChange"
@@ -34,10 +35,10 @@ export default {
         { id: 2, name: "Уровень 2" },
         { id: 3, name: "Уровень 3" }
       ],
-      questionTypes: [
-        { id: 1, name: "Один вариант ответа" },
-        { id: 2, name: "Несколько вариантов" },
-        { id: 3, name: "Открытый ответ" }
+      typeAnswers: [
+        { id: "one", name: "Один вариант ответа" },
+        { id: "many", name: "Несколько вариантов" },
+        { id: "open", name: "Открытый ответ" }
       ]
     };
   },
