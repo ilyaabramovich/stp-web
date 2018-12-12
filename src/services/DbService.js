@@ -13,4 +13,3 @@ export const addChapter = data => api.post("/chapters", { data });
 export const addParagraph = data => api.post("/paragraphs", { data });
 export const addSection = data => api.post("/sections", { data });
 export const addUnit = data => api.post("/units", { data });
-

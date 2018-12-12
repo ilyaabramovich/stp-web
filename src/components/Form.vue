@@ -1,123 +1,117 @@
 <template>
-  <section class="section">
-    <div class="container">
-      <div class="box">
-        <form>
-          <select-container :on-submit="addChapter" title="Глава" hasAddon>
-            <select @change="onChapterChange(chapterId)" v-model="chapterId">
-              <option disabled value>Выберите главу</option>
-              <option
-                :key="chapter.id"
-                v-for="chapter in chapters"
-                :value="chapter.id"
-              >{{ chapter.name }}</option>
-            </select>
-          </select-container>
-          <select-container :on-submit="addSection" title="Раздел" hasAddon>
-            <select :disabled="!chapterId" @change="onSectionChange(sectionId)" v-model="sectionId">
-              <option disabled value>Выберите раздел</option>
-              <option
-                :key="section.id"
-                v-for="section in sections"
-                :value="section.id"
-              >{{ section.name }}</option>
-            </select>
-          </select-container>
-          <select-container :on-submit="addParagraph" title="Параграф" hasAddon>
-            <select
-              :disabled="!sectionId"
-              @change="onParagraphChange(paragraphId)"
-              v-model="paragraphId"
-            >
-              <option disabled value>Выберите параграф</option>
-              <option
-                :key="paragraph.id"
-                v-for="paragraph in paragraphs"
-                :value="paragraph.id"
-              >{{ paragraph.name }}</option>
-            </select>
-          </select-container>
-          <select-container title="Задания" hasAddon>
-            <select :disabled="!paragraphId" v-model="unitId">
-              <option disabled value>Выберите задание</option>
-              <option
-                :key="unit.id"
-                v-for="unit in units"
-                :value="unit.id"
-              >{{ unit.name }} ({{unit.hint}}) Сложность: {{unit.difficulty}}</option>
-            </select>
-          </select-container>
-          <div class="columns">
-            <div class="column is-three-quarters">
-              <select-container title="Тип вопроса" :hasAddon="false">
-                <select v-model="typeAnswer">
-                  <option disabled value>Выберите тип</option>
-                  <option
-                    :key="typeAnswer.id"
-                    v-for="typeAnswer in typeAnswers"
-                    :value="typeAnswer.id"
-                  >{{ typeAnswer.name }}</option>
-                </select>
-              </select-container>
-            </div>
-            <div class="column">
-              <select-container title="Сложность" :hasAddon="false">
-                <select v-model="difficulty">
-                  <option disabled value>Выберите сложность</option>
-                  <option
-                    :key="difficulty.id"
-                    v-for="difficulty in difficulties"
-                    :value="difficulty.id"
-                  >{{ difficulty.name }}</option>
-                </select>
-              </select-container>
-            </div>
+  <div class="container">
+    <div class="box">
+      <form>
+        <select-container :on-submit="addChapter" title="Глава" hasAddon>
+          <select @change="onChapterChange(chapterId)" v-model="chapterId">
+            <option disabled value>Выберите главу</option>
+            <option
+              :key="chapter.id"
+              v-for="chapter in chapters"
+              :value="chapter.id"
+            >{{ chapter.name }}</option>
+          </select>
+        </select-container>
+        <select-container :on-submit="addSection" title="Раздел" hasAddon>
+          <select :disabled="!chapterId" @change="onSectionChange(sectionId)" v-model="sectionId">
+            <option disabled value>Выберите раздел</option>
+            <option
+              :key="section.id"
+              v-for="section in sections"
+              :value="section.id"
+            >{{ section.name }}</option>
+          </select>
+        </select-container>
+        <select-container :on-submit="addParagraph" title="Параграф" hasAddon>
+          <select
+            :disabled="!sectionId"
+            @change="onParagraphChange(paragraphId)"
+            v-model="paragraphId"
+          >
+            <option disabled value>Выберите параграф</option>
+            <option
+              :key="paragraph.id"
+              v-for="paragraph in paragraphs"
+              :value="paragraph.id"
+            >{{ paragraph.name }}</option>
+          </select>
+        </select-container>
+        <select-container title="Задания" hasAddon>
+          <select :disabled="!paragraphId" v-model="unitId">
+            <option disabled value>Выберите задание</option>
+            <option
+              :key="unit.id"
+              v-for="unit in units"
+              :value="unit.id"
+            >{{ unit.name }} ({{unit.hint}}) Сложность: {{unit.difficulty}}</option>
+          </select>
+        </select-container>
+        <div class="columns">
+          <div class="column is-three-quarters">
+            <select-container title="Тип вопроса" :hasAddon="false">
+              <select v-model="typeAnswer">
+                <option disabled value>Выберите тип</option>
+                <option
+                  :key="typeAnswer.id"
+                  v-for="typeAnswer in typeAnswers"
+                  :value="typeAnswer.id"
+                >{{ typeAnswer.name }}</option>
+              </select>
+            </select-container>
           </div>
-          <textarea-container title="Вопрос">
-            <textarea
-              v-model="name"
-              placeholder="Введите текст вопроса"
-              class="textarea"
-              cols="30"
-              rows="5"
-            ></textarea>
-          </textarea-container>
-          <textarea-container title="Подсказка">
-            <textarea
-              v-model="hint"
-              placeholder="Введите подсказку к вопросу"
-              class="textarea"
-              cols="30"
-              rows="5"
-            ></textarea>
-          </textarea-container>
-          <div class="field">
-            <label class="label">Введите правильный ответ</label>
-            <div class="control">
-              <input type="text" v-model="answer" class="input">
-            </div>
+          <div class="column">
+            <select-container title="Сложность" :hasAddon="false">
+              <select v-model="difficulty">
+                <option disabled value>Выберите сложность</option>
+                <option
+                  :key="difficulty.id"
+                  v-for="difficulty in difficulties"
+                  :value="difficulty.id"
+                >{{ difficulty.name }}</option>
+              </select>
+            </select-container>
           </div>
-          <div class="field is-grouped">
-            <div class="control">
-              <button
-                class="button is-success"
-                :disabled="!(answer&&name&&unitId&&hint)"
-                type="button"
-                @click="addQuestion"
-              >Добавить вопрос</button>
-            </div>
-            <div class="control">
-              <button
-                class="button is-primary"
-                type="button"
-                @click="generateJSON"
-              >Сгенерировать JSON</button>
-            </div>
+        </div>
+        <textarea-container title="Вопрос">
+          <textarea
+            v-model="name"
+            placeholder="Введите текст вопроса"
+            class="textarea"
+            cols="30"
+            rows="5"
+          ></textarea>
+        </textarea-container>
+        <textarea-container title="Подсказка">
+          <textarea
+            v-model="hint"
+            placeholder="Введите подсказку к вопросу"
+            class="textarea"
+            cols="30"
+            rows="5"
+          ></textarea>
+        </textarea-container>
+        <div class="field">
+          <label class="label">Введите правильный ответ</label>
+          <div class="control">
+            <input type="text" v-model="answer" class="input">
           </div>
-        </form>
-      </div>
+        </div>
+        <div class="field is-grouped">
+          <div class="control">
+            <button
+              class="button is-success"
+              :disabled="!(answer&&name&&unitId&&hint)"
+              type="button"
+              @click="addQuestion"
+            >Добавить вопрос</button>
+          </div>
+          <div class="control">
+            <button class="button is-primary" type="button" @click="generateJSON">Сгенерировать JSON</button>
+          </div>
+        </div>
+      </form>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
