@@ -2,16 +2,15 @@
   <div id="app">
     <Header :title="title"/>
     <Form
-      :subsections="subsections"
+      :units="units"
       :paragraphs="paragraphs"
       :chapters="chapters"
       :sections="sections"
       :difficulties="difficulties"
-      :selected-chapter="selectedChapter"
-      :selected-section="selectedSection"
-      :selected-paragraph="selectedParagraph"
-      :selected-subsection="selectedSubsection"
-      :selected-difficulty="selectedDifficulty"
+      :question-types="questionTypes"
+      :on-chapter-change="onChapterChange"
+      :on-section-change="onSectionChange"
+      :on-paragraph-change="onParagraphChange"
     />
   </div>
 </template>
@@ -19,48 +18,78 @@
 <script>
 import Header from "./components/Header.vue";
 import Form from "./components/Form.vue";
+import * as api from "./services/DbService";
 
 export default {
   name: "app",
   data() {
     return {
       title: "Добавление вопроса",
-      selectedChapter: "",
-      selectedSection: "",
-      selectedParagraph: "",
-      selectedSubsection: "",
-      selectedDifficulty: "",
-      chapters: [
-        { value: 1, title: "Глава 1" },
-        { value: 2, title: "Глава 2" },
-        { value: 3, title: "Глава 3" }
-      ],
-      sections: [
-        { value: 1, title: "Раздел 1" },
-        { value: 2, title: "Раздел 2" },
-        { value: 3, title: "Раздел 3" }
-      ],
-      subsections: [
-        { value: 1, title: "Тип 1" },
-        { value: 2, title: "Тип 2" },
-        { value: 3, title: "Тип 3" }
-      ],
-      paragraphs: [
-        { value: 1, title: "Параграф 1" },
-        { value: 2, title: "Параграф 2" },
-        { value: 3, title: "Параграф 3" }
-      ],
+      chapters: [],
+      sections: [],
+      paragraphs: [],
+      units: [],
       difficulties: [
-        { value: 1, title: "Уровень 1" },
-        { value: 2, title: "Уровень 2" },
-        { value: 3, title: "Уровень 3" }
+        { id: 1, name: "Уровень 1" },
+        { id: 2, name: "Уровень 2" },
+        { id: 3, name: "Уровень 3" }
       ],
       questionTypes: [
-        { id: 1, type: "Один вариант ответа" },
-        { id: 2, type: "Несколько вариантов" },
-        { id: 3, type: "Открытый ответ" }
+        { id: 1, name: "Один вариант ответа" },
+        { id: 2, name: "Несколько вариантов" },
+        { id: 3, name: "Открытый ответ" }
       ]
     };
+  },
+  created: function() {
+    return this.fetchChapters();
+  },
+  methods: {
+    onChapterChange: async function(chapterId) {
+      await this.fetchSections(chapterId);
+    },
+    onSectionChange: async function(sectionId) {
+      await this.fetchParagraphs(sectionId);
+    },
+    onParagraphChange: async function(paragraphId) {
+      await this.fetchUnits(paragraphId);
+    },
+    fetchChapters: function() {
+      return (
+        api
+          .getChapters()
+          .then(res => (this.chapters = res.data))
+          // eslint-disable-next-line
+          .catch(error => console.error(error))
+      );
+    },
+    fetchSections: function(chapterId) {
+      return (
+        api
+          .getSections(chapterId)
+          .then(res => (this.sections = res.data))
+          // eslint-disable-next-line
+          .catch(error => console.error(error))
+      );
+    },
+    fetchParagraphs: function(sectionId) {
+      return (
+        api
+          .getParagraphs(sectionId)
+          .then(res => (this.paragraphs = res.data))
+          // eslint-disable-next-line
+          .catch(error => console.error(error))
+      );
+    },
+    fetchUnits: function(paragraphId) {
+      return (
+        api
+          .getUnits(paragraphId)
+          .then(res => (this.units = res.data))
+          // eslint-disable-next-line
+          .catch(error => console.error(error))
+      );
+    }
   },
   components: {
     Form,
