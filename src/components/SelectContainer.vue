@@ -24,9 +24,33 @@
                     <input v-model="name" type="text" class="input">
                   </div>
                 </div>
+                <select-container v-if="forUnit" title="Сложность" :hasAddon="false">
+                  <select v-model="difficulty">
+                    <option disabled value>Выберите сложность</option>
+                    <option
+                      :key="difficulty.id"
+                      v-for="difficulty in difficulties"
+                      :value="difficulty.id"
+                    >{{ difficulty.name }}</option>
+                  </select>
+                </select-container>
+                <textarea-container v-if="forUnit" title="Подсказка">
+                  <textarea
+                    v-model="hint"
+                    placeholder="Введите подсказку к заданию"
+                    class="textarea"
+                    cols="30"
+                    rows="5"
+                  ></textarea>
+                </textarea-container>
               </section>
               <footer class="modal-card-foot">
-                <button class="button is-success" type="button" @click="handleSubmit">Добавить</button>
+                <button
+                  :disabled="forUnit?!(name&&difficulty&&hint):!(name)"
+                  class="button is-success"
+                  type="button"
+                  @click="handleSubmit"
+                >Добавить</button>
               </footer>
             </div>
           </div>
@@ -37,27 +61,47 @@
 </template>
 
 <script>
+import TextareaContainer from "./TextareaContainer";
+
 export default {
   name: "SelectContainer",
   props: {
     hasAddon: Boolean,
     title: String,
     onSubmit: Function,
-    id: String
+    id: String,
+    difficulties: Array
   },
   data() {
     return {
       isActive: false,
-      name: ""
+      name: "",
+      difficulty: "",
+      hint: ""
     };
+  },
+  components: {
+    TextareaContainer
+  },
+  computed: {
+    forUnit: function() {
+      return this.title === "Задание";
+    }
   },
   methods: {
     show() {
       this.isActive = true;
     },
     handleSubmit: function() {
-      this.onSubmit(this.name);
-      this.name = "";
+      if (!this.forUnit) {
+        this.onSubmit(this.name);
+        this.name = "";
+      } else {
+        this.onSubmit(this.name, this.difficulty, this.hint);
+        this.name = "";
+        this.difficulty = "";
+        this.hint = "";
+      }
       this.hide();
     },
     hide() {

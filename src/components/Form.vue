@@ -36,7 +36,12 @@
             >{{ paragraph.name }}</option>
           </select>
         </select-container>
-        <select-container title="Задания" hasAddon>
+        <select-container
+          :difficulties="difficulties"
+          :on-submit="addUnit"
+          title="Задание"
+          hasAddon
+        >
           <select :disabled="!paragraphId" v-model="unitId">
             <option disabled value>Выберите задание</option>
             <option
@@ -181,6 +186,20 @@ export default {
         })
         .then(() => {
           alert("Параграф добавлен!");
+          // eslint-disable-next-line
+        }) // eslint-disable-next-line
+        .catch(error => console.error(error));
+    },
+    addUnit: function(name, difficulty, hint) {
+      return api
+        .addUnit({
+          name,
+          paragraphId: this.paragraphId,
+          difficulty,
+          hint
+        })
+        .then(() => {
+          alert("Задание добавлено!");
           // eslint-disable-next-line
         }) // eslint-disable-next-line
         .catch(error => console.error(error));
