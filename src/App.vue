@@ -2,7 +2,6 @@
   <div id="app">
     <TheHeading :title="title"/>
     <QuestionForm
-      :refetch-chapters="fetchChapters"
       :units="units"
       :paragraphs="paragraphs"
       :chapters="chapters"
