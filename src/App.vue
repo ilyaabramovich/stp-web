@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Header :title="title"/>
-    <Form
+    <TheHeading :title="title"/>
+    <QuestionForm
       :refetch-chapters="fetchChapters"
       :units="units"
       :paragraphs="paragraphs"
@@ -17,12 +17,16 @@
 </template>
 
 <script>
-import Header from "./components/Header.vue";
-import Form from "./components/Form.vue";
+import TheHeading from "./components/TheHeading.vue";
+import QuestionForm from "./components/QuestionForm.vue";
 import * as api from "./services/DbService";
 
 export default {
   name: "app",
+  components: {
+    QuestionForm,
+    TheHeading
+  },
   data() {
     return {
       title: "Добавление вопроса",
@@ -42,59 +46,47 @@ export default {
       ]
     };
   },
-  created: function() {
-    return this.fetchChapters();
+  created() {
+    this.fetchChapters();
   },
   methods: {
-    onChapterChange: async function(chapterId) {
-      await this.fetchSections(chapterId);
+    onChapterChange(chapterId) {
+      this.fetchSections(chapterId);
     },
-    onSectionChange: async function(sectionId) {
-      await this.fetchParagraphs(sectionId);
+    onSectionChange(sectionId) {
+      this.fetchParagraphs(sectionId);
     },
-    onParagraphChange: async function(paragraphId) {
-      await this.fetchUnits(paragraphId);
+    onParagraphChange(paragraphId) {
+      this.fetchUnits(paragraphId);
     },
-    fetchChapters: function() {
-      return (
-        api
-          .getChapters()
-          .then(res => (this.chapters = res.data))
-          // eslint-disable-next-line
-          .catch(error => console.error(error))
-      );
+    fetchChapters() {
+      api
+        .getChapters()
+        .then(res => (this.chapters = res.data))
+        // eslint-disable-next-line
+        .catch(error => console.error(error));
     },
-    fetchSections: function(chapterId) {
-      return (
-        api
-          .getSections(chapterId)
-          .then(res => (this.sections = res.data))
-          // eslint-disable-next-line
-          .catch(error => console.error(error))
-      );
+    fetchSections(chapterId) {
+      api
+        .getSections(chapterId)
+        .then(res => (this.sections = res.data))
+        // eslint-disable-next-line
+        .catch(error => console.error(error));
     },
-    fetchParagraphs: function(sectionId) {
-      return (
-        api
-          .getParagraphs(sectionId)
-          .then(res => (this.paragraphs = res.data))
-          // eslint-disable-next-line
-          .catch(error => console.error(error))
-      );
+    fetchParagraphs(sectionId) {
+      api
+        .getParagraphs(sectionId)
+        .then(res => (this.paragraphs = res.data))
+        // eslint-disable-next-line
+        .catch(error => console.error(error));
     },
-    fetchUnits: function(paragraphId) {
-      return (
-        api
-          .getUnits(paragraphId)
-          .then(res => (this.units = res.data))
-          // eslint-disable-next-line
-          .catch(error => console.error(error))
-      );
+    fetchUnits(paragraphId) {
+      api
+        .getUnits(paragraphId)
+        .then(res => (this.units = res.data))
+        // eslint-disable-next-line
+        .catch(error => console.error(error));
     }
-  },
-  components: {
-    Form,
-    Header
   }
 };
 </script>

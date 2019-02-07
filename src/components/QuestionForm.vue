@@ -77,7 +77,7 @@
             </select-container>
           </div>
         </div>
-        <textarea-container title="Вопрос">
+        <question-form-field title="Вопрос">
           <textarea
             v-model="name"
             placeholder="Введите текст вопроса"
@@ -85,8 +85,8 @@
             cols="30"
             rows="5"
           ></textarea>
-        </textarea-container>
-        <textarea-container title="Подсказка">
+        </question-form-field>
+        <question-form-field title="Подсказка">
           <textarea
             v-model="hint"
             placeholder="Введите подсказку к вопросу"
@@ -94,7 +94,7 @@
             cols="30"
             rows="5"
           ></textarea>
-        </textarea-container>
+        </question-form-field>
         <div class="field">
           <label class="label">Введите правильный ответ</label>
           <div class="control">
@@ -121,11 +121,39 @@
 
 <script>
 import SelectContainer from "./SelectContainer.vue";
-import TextareaContainer from "./TextareaContainer.vue";
+import QuestionFormField from "./QuestionFormField.vue";
 import * as api from "../services/DbService";
 
 export default {
   name: "Form",
+  components: {
+    SelectContainer,
+    QuestionFormField
+  },
+  props: {
+    typeAnswers: Array,
+    chapters: Array,
+    sections: Array,
+    units: Array,
+    paragraphs: Array,
+    difficulties: Array,
+    onChapterChange: Function,
+    onSectionChange: Function,
+    onParagraphChange: Function
+  },
+  data() {
+    return {
+      chapterId: "",
+      sectionId: "",
+      paragraphId: "",
+      hint: "",
+      unitId: "",
+      name: "",
+      difficulty: "",
+      typeAnswer: "",
+      answer: ""
+    };
+  },
   methods: {
     generateJSON: function() {
       return api
@@ -204,34 +232,6 @@ export default {
         }) // eslint-disable-next-line
         .catch(error => console.error(error));
     }
-  },
-  props: {
-    typeAnswers: Array,
-    chapters: Array,
-    sections: Array,
-    units: Array,
-    paragraphs: Array,
-    difficulties: Array,
-    onChapterChange: Function,
-    onSectionChange: Function,
-    onParagraphChange: Function
-  },
-  data() {
-    return {
-      chapterId: "",
-      sectionId: "",
-      paragraphId: "",
-      hint: "",
-      unitId: "",
-      name: "",
-      difficulty: "",
-      typeAnswer: "",
-      answer: ""
-    };
-  },
-  components: {
-    SelectContainer,
-    TextareaContainer
   }
 };
 </script>

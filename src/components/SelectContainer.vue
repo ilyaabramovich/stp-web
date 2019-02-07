@@ -1,70 +1,69 @@
 <template>
-  <div class="field">
-    <label class="label">{{title}}</label>
-    <div class="control">
-      <div class="field has-addons">
-        <div class="control is-expanded">
-          <div class="select is-fullwidth">
-            <slot></slot>
-          </div>
+  <question-form-field :title="title">
+    <div class="field has-addons">
+      <div class="control is-expanded">
+        <div class="select is-fullwidth">
+          <slot></slot>
         </div>
-        <div v-if="hasAddon" class="control">
-          <button type="button" class="button is-info" @click="show">Добавить</button>
-          <div class="modal" :class="{'is-active':isActive}">
-            <div class="modal-background"></div>
-            <div class="modal-card">
-              <header class="modal-card-head">
-                <button class="delete" aria-label="close" @click="hide"></button>
-              </header>
-              <section class="modal-card-body">
-                <!-- Content ... -->
-                <div class="field">
-                  <div class="label">Введите имя</div>
-                  <div class="control">
-                    <input v-model="name" type="text" class="input">
-                  </div>
+      </div>
+      <div v-if="hasAddon" class="control">
+        <button type="button" class="button is-info" @click="show">Добавить</button>
+        <div class="modal" :class="{'is-active':isActive}">
+          <div class="modal-background"></div>
+          <div class="modal-card">
+            <header class="modal-card-head">
+              <button class="delete" aria-label="close" @click="hide"></button>
+            </header>
+            <section class="modal-card-body">
+              <div class="field">
+                <div class="label">Введите имя</div>
+                <div class="control">
+                  <input v-model="name" type="text" class="input">
                 </div>
-                <select-container v-if="forUnit" title="Сложность" :hasAddon="false">
-                  <select v-model="difficulty">
-                    <option disabled value>Выберите сложность</option>
-                    <option
-                      :key="difficulty.id"
-                      v-for="difficulty in difficulties"
-                      :value="difficulty.id"
-                    >{{ difficulty.name }}</option>
-                  </select>
-                </select-container>
-                <textarea-container v-if="forUnit" title="Подсказка">
-                  <textarea
-                    v-model="hint"
-                    placeholder="Введите подсказку к заданию"
-                    class="textarea"
-                    cols="30"
-                    rows="5"
-                  ></textarea>
-                </textarea-container>
-              </section>
-              <footer class="modal-card-foot">
-                <button
-                  :disabled="forUnit?!(name&&difficulty&&hint):!(name)"
-                  class="button is-success"
-                  type="button"
-                  @click="handleSubmit"
-                >Добавить</button>
-              </footer>
-            </div>
+              </div>
+              <select-container v-if="forUnit" title="Сложность" :hasAddon="false">
+                <select v-model="difficulty">
+                  <option disabled value>Выберите сложность</option>
+                  <option
+                    :key="difficulty.id"
+                    v-for="difficulty in difficulties"
+                    :value="difficulty.id"
+                  >{{ difficulty.name }}</option>
+                </select>
+              </select-container>
+              <question-form-field v-if="forUnit" title="Подсказка">
+                <textarea
+                  v-model="hint"
+                  placeholder="Введите подсказку к заданию"
+                  class="textarea"
+                  cols="30"
+                  rows="5"
+                ></textarea>
+              </question-form-field>
+            </section>
+            <footer class="modal-card-foot">
+              <button
+                :disabled="forUnit?!(name&&difficulty&&hint):!(name)"
+                class="button is-success"
+                type="button"
+                @click="handleSubmit"
+              >Добавить</button>
+            </footer>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </question-form-field>
 </template>
 
 <script>
-import TextareaContainer from "./TextareaContainer";
+import QuestionFormField from "./QuestionFormField";
 
 export default {
   name: "SelectContainer",
+  components: {
+    QuestionFormField
+  },
   props: {
     hasAddon: Boolean,
     title: String,
@@ -79,9 +78,6 @@ export default {
       difficulty: "",
       hint: ""
     };
-  },
-  components: {
-    TextareaContainer
   },
   computed: {
     forUnit: function() {

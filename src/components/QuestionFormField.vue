@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: "TextareaContainer",
+  name: "QuestionFormField",
   props: {
     title: String
   }
