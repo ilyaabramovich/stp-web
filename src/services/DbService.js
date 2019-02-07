@@ -21,18 +21,18 @@ export default {
     return apiClient.get(`/units/?paragraphId=${value}`);
   },
   addQuestion(data) {
-    return apiClient.post("/questions", { data });
+    return apiClient.post("/questions", data);
   },
   addChapter(data) {
-    return apiClient.post("/chapters", { data });
+    return apiClient.post("/chapters", data);
   },
   addParagraph(data) {
-    return apiClient.post("/paragraphs", { data });
+    return apiClient.post("/paragraphs", data);
   },
   addSection(data) {
-    return apiClient.post("/sections", { data });
+    return apiClient.post("/sections", data);
   },
   addUnit(data) {
-    return apiClient.post("/units", { data });
+    return apiClient.post("/units", data);
   }
 };
