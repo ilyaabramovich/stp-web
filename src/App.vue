@@ -13,6 +13,11 @@
       :on-section-change="onSectionChange"
       :on-paragraph-change="onParagraphChange"
       :on-generate-click="generateJSON"
+      :on-chapter-add="addChapter"
+      :on-question-add="addQuestion"
+      :on-section-add="addSection"
+      :on-paragraph-add="addParagraph"
+      :on-unit-add="addUnit"
     />
   </div>
 </template>
@@ -51,6 +56,71 @@ export default {
     this.fetchChapters();
   },
   methods: {
+    addChapter(name) {
+      api
+        .addChapter({
+          name
+        })
+        .then(() => {
+          alert("Глава добавлена!");
+          // eslint-disable-next-line
+        }) // eslint-disable-next-line
+        .catch(error => console.error(error));
+    },
+    addSection(name, chapterId) {
+      api
+        .addSection({
+          name,
+          chapterId
+        })
+        .then(() => {
+          alert("Раздел добавлен!");
+          // eslint-disable-next-line
+        }) // eslint-disable-next-line
+        .catch(error => console.error(error));
+    },
+    addParagraph(name, sectionId) {
+      api
+        .addParagraph({
+          name,
+          sectionId
+        })
+        .then(() => {
+          alert("Параграф добавлен!");
+          // eslint-disable-next-line
+        }) // eslint-disable-next-line
+        .catch(error => console.error(error));
+    },
+    addUnit(name, difficulty, paragraphId, hint) {
+      api
+        .addUnit({
+          name,
+          difficulty,
+          paragraphId,
+          hint
+        })
+        .then(() => {
+          alert("Задание добавлено!");
+          // eslint-disable-next-line
+        }) // eslint-disable-next-line
+        .catch(error => console.error(error));
+    },
+    addQuestion(unitId, name, hint, typeAnswer, answer) {
+      api
+        .addQuestion({
+          unitId,
+          name,
+          hint,
+          typeAnswer,
+          answer
+        })
+        .then(() => {
+          alert("Вопрос добавлен!");
+          // eslint-disable-next-line
+        })
+        // eslint-disable-next-line
+        .catch(error => console.error(error));
+    },
     generateJSON() {
       api
         .generateJSON()

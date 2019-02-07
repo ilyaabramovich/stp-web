@@ -126,7 +126,6 @@
 <script>
 import QuestionFormFieldSelect from "./QuestionFormFieldSelect.vue";
 import QuestionFormField from "./QuestionFormField.vue";
-import * as api from "../services/DbService";
 
 export default {
   name: "Form",
@@ -144,7 +143,12 @@ export default {
     onChapterChange: Function,
     onSectionChange: Function,
     onParagraphChange: Function,
-    onGenerateClick: Function
+    onGenerateClick: Function,
+    onChapterAdd: Function,
+    onQuestionAdd: Function,
+    onSectionAdd: Function,
+    onParagraphAdd: Function,
+    onUnitAdd: Function
   },
   data() {
     return {
@@ -161,69 +165,25 @@ export default {
   },
   methods: {
     addQuestion() {
-      api
-        .addQuestion({
-          unitId: this.unitId,
-          name: this.name,
-          hint: this.hint,
-          typeAnswer: this.typeAnswer,
-          answer: this.answer
-        })
-        .then(() => {
-          alert("Вопрос добавлен!");
-          // eslint-disable-next-line
-        })
-        // eslint-disable-next-line
-        .catch(error => console.error(error));
+      this.onQuestionAdd(
+        this.unitId,
+        this.name,
+        this.hint,
+        this.typeAnswer,
+        this.answer
+      );
     },
     addChapter(name) {
-      api
-        .addChapter({
-          name
-        })
-        .then(() => {
-          alert("Глава добавлена!");
-          // eslint-disable-next-line
-        }) // eslint-disable-next-line
-        .catch(error => console.error(error));
+      this.onChapterAdd(name);
     },
     addSection(name) {
-      api
-        .addSection({
-          name,
-          chapterId: this.chapterId
-        })
-        .then(() => {
-          alert("Раздел добавлен!");
-          // eslint-disable-next-line
-        }) // eslint-disable-next-line
-        .catch(error => console.error(error));
+      this.onSectionAdd(name, this.chapterId);
     },
     addParagraph(name) {
-      api
-        .addParagraph({
-          name,
-          sectionId: this.sectionId
-        })
-        .then(() => {
-          alert("Параграф добавлен!");
-          // eslint-disable-next-line
-        }) // eslint-disable-next-line
-        .catch(error => console.error(error));
+      this.onParagraphAdd(name, this.sectionId);
     },
     addUnit(name, difficulty, hint) {
-      api
-        .addUnit({
-          name,
-          paragraphId: this.paragraphId,
-          difficulty,
-          hint
-        })
-        .then(() => {
-          alert("Задание добавлено!");
-          // eslint-disable-next-line
-        }) // eslint-disable-next-line
-        .catch(error => console.error(error));
+      this.onUnitAdd(name,  difficulty, this.paragraphId, hint);
     }
   }
 };
