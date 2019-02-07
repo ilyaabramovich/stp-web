@@ -1,15 +1,16 @@
-import Api from "./Api";
-const api = new Api();
+import axios from "axios";
 
-export const getChapters = () => api.get("/chapters");
-export const generateJSON = () => api.get("/questions");
-export const getSections = value => api.get(`/sections/?chapterId=${value}`);
-export const getParagraphs = value =>
-  api.get(`/paragraphs/?sectionId=${value}`);
-export const getUnits = value => api.get(`/units/?paragraphId=${value}`);
+const apiClient = axios.create({
+  baseURL: `http://localhost:3000/api/`
+});
 
-export const addQuestion = data => api.post("/questions", { data });
-export const addChapter = data => api.post("/chapters", { data });
-export const addParagraph = data => api.post("/paragraphs", { data });
-export const addSection = data => api.post("/sections", { data });
-export const addUnit = data => api.post("/units", { data });
+export const getChapters = () => apiClient.get("/chapters");
+export const generateJSON = () => apiClient.get("/questions");
+export const getSections = value => apiClient.get(`/sections/?chapterId=${value}`);
+export const getParagraphs = value => apiClient.get(`/paragraphs/?sectionId=${value}`);
+export const getUnits = value => apiClient.get(`/units/?paragraphId=${value}`);
+export const addQuestion = data => apiClient.post("/questions", { data });
+export const addChapter = data => apiClient.post("/chapters", { data });
+export const addParagraph = data => apiClient.post("/paragraphs", { data });
+export const addSection = data => apiClient.post("/sections", { data });
+export const addUnit = data => apiClient.post("/units", { data });
