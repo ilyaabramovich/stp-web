@@ -111,7 +111,11 @@
             >Добавить вопрос</button>
           </div>
           <div class="control">
-            <button class="button is-primary" type="button" @click="generateJSON">Сгенерировать JSON</button>
+            <button
+              class="button is-primary"
+              type="button"
+              @click="onGenerateClick"
+            >Сгенерировать JSON</button>
           </div>
         </div>
       </form>
@@ -139,7 +143,8 @@ export default {
     difficulties: Array,
     onChapterChange: Function,
     onSectionChange: Function,
-    onParagraphChange: Function
+    onParagraphChange: Function,
+    onGenerateClick: Function
   },
   data() {
     return {
@@ -155,36 +160,24 @@ export default {
     };
   },
   methods: {
-    generateJSON: function() {
-      return api
-        .generateJSON()
-        .then(res => {
-          alert("JSON сгенерирован!");
+    addQuestion() {
+      api
+        .addQuestion({
+          unitId: this.unitId,
+          name: this.name,
+          hint: this.hint,
+          typeAnswer: this.typeAnswer,
+          answer: this.answer
+        })
+        .then(() => {
+          alert("Вопрос добавлен!");
           // eslint-disable-next-line
-          console.log(res.data);
-        }) // eslint-disable-next-line
+        })
+        // eslint-disable-next-line
         .catch(error => console.error(error));
     },
-    addQuestion: function() {
-      return (
-        api
-          .addQuestion({
-            unitId: this.unitId,
-            name: this.name,
-            hint: this.hint,
-            typeAnswer: this.typeAnswer,
-            answer: this.answer
-          })
-          .then(() => {
-            alert("Вопрос добавлен!");
-            // eslint-disable-next-line
-          })
-          // eslint-disable-next-line
-          .catch(error => console.error(error))
-      );
-    },
-    addChapter: function(name) {
-      return api
+    addChapter(name) {
+      api
         .addChapter({
           name
         })
@@ -194,8 +187,8 @@ export default {
         }) // eslint-disable-next-line
         .catch(error => console.error(error));
     },
-    addSection: function(name) {
-      return api
+    addSection(name) {
+      api
         .addSection({
           name,
           chapterId: this.chapterId
@@ -206,8 +199,8 @@ export default {
         }) // eslint-disable-next-line
         .catch(error => console.error(error));
     },
-    addParagraph: function(name) {
-      return api
+    addParagraph(name) {
+      api
         .addParagraph({
           name,
           sectionId: this.sectionId
@@ -218,8 +211,8 @@ export default {
         }) // eslint-disable-next-line
         .catch(error => console.error(error));
     },
-    addUnit: function(name, difficulty, hint) {
-      return api
+    addUnit(name, difficulty, hint) {
+      api
         .addUnit({
           name,
           paragraphId: this.paragraphId,

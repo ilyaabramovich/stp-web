@@ -8,7 +8,6 @@
       </div>
       <div v-if="hasAddon" class="control">
         <question-form-add-modal
-          :is-active="isActive"
           :disabled="forUnit?!(name&&difficulty&&hint):!(name)"
           :on-submit="handleSubmit"
         >
@@ -59,7 +58,6 @@ export default {
   },
   data() {
     return {
-      isActive: false,
       name: "",
       difficulty: "",
       hint: ""

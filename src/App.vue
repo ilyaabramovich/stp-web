@@ -12,6 +12,7 @@
       :on-chapter-change="onChapterChange"
       :on-section-change="onSectionChange"
       :on-paragraph-change="onParagraphChange"
+      :on-generate-click="generateJSON"
     />
   </div>
 </template>
@@ -50,6 +51,16 @@ export default {
     this.fetchChapters();
   },
   methods: {
+    generateJSON() {
+      api
+        .generateJSON()
+        .then(res => {
+          alert("JSON сгенерирован!");
+          // eslint-disable-next-line
+          console.log(res.data);
+        }) // eslint-disable-next-line
+        .catch(error => console.error(error));
+    },
     onChapterChange(chapterId) {
       this.fetchSections(chapterId);
     },
