@@ -2,7 +2,7 @@
   <div class="container">
     <div class="box">
       <form>
-        <select-container :on-submit="addChapter" title="Глава" hasAddon>
+        <question-form-field-select :on-submit="addChapter" title="Глава" hasAddon>
           <select @change="onChapterChange(chapterId)" v-model="chapterId">
             <option disabled value>Выберите главу</option>
             <option
@@ -11,8 +11,8 @@
               :value="chapter.id"
             >{{ chapter.name }}</option>
           </select>
-        </select-container>
-        <select-container :on-submit="addSection" title="Раздел" hasAddon>
+        </question-form-field-select>
+        <question-form-field-select :on-submit="addSection" title="Раздел" hasAddon>
           <select :disabled="!chapterId" @change="onSectionChange(sectionId)" v-model="sectionId">
             <option disabled value>Выберите раздел</option>
             <option
@@ -21,8 +21,8 @@
               :value="section.id"
             >{{ section.name }}</option>
           </select>
-        </select-container>
-        <select-container :on-submit="addParagraph" title="Параграф" hasAddon>
+        </question-form-field-select>
+        <question-form-field-select :on-submit="addParagraph" title="Параграф" hasAddon>
           <select
             :disabled="!sectionId"
             @change="onParagraphChange(paragraphId)"
@@ -35,8 +35,8 @@
               :value="paragraph.id"
             >{{ paragraph.name }}</option>
           </select>
-        </select-container>
-        <select-container
+        </question-form-field-select>
+        <question-form-field-select
           :difficulties="difficulties"
           :on-submit="addUnit"
           title="Задание"
@@ -50,10 +50,10 @@
               :value="unit.id"
             >{{ unit.name }} ({{unit.hint}}) Сложность: {{unit.difficulty}}</option>
           </select>
-        </select-container>
+        </question-form-field-select>
         <div class="columns">
           <div class="column is-three-quarters">
-            <select-container title="Тип вопроса" :hasAddon="false">
+            <question-form-field-select title="Тип вопроса" :hasAddon="false">
               <select v-model="typeAnswer">
                 <option disabled value>Выберите тип</option>
                 <option
@@ -62,10 +62,10 @@
                   :value="typeAnswer.id"
                 >{{ typeAnswer.name }}</option>
               </select>
-            </select-container>
+            </question-form-field-select>
           </div>
           <div class="column">
-            <select-container title="Сложность" :hasAddon="false">
+            <question-form-field-select title="Сложность" :hasAddon="false">
               <select v-model="difficulty">
                 <option disabled value>Выберите сложность</option>
                 <option
@@ -74,7 +74,7 @@
                   :value="difficulty.id"
                 >{{ difficulty.name }}</option>
               </select>
-            </select-container>
+            </question-form-field-select>
           </div>
         </div>
         <question-form-field title="Вопрос">
@@ -120,14 +120,14 @@
 </template>
 
 <script>
-import SelectContainer from "./SelectContainer.vue";
+import QuestionFormFieldSelect from "./QuestionFormFieldSelect.vue";
 import QuestionFormField from "./QuestionFormField.vue";
 import * as api from "../services/DbService";
 
 export default {
   name: "Form",
   components: {
-    SelectContainer,
+    QuestionFormFieldSelect,
     QuestionFormField
   },
   props: {
