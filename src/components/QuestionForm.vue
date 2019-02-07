@@ -111,11 +111,7 @@
             >Добавить вопрос</button>
           </div>
           <div class="control">
-            <button
-              class="button is-primary"
-              type="button"
-              @click="onGenerateClick"
-            >Сгенерировать JSON</button>
+            <button class="button is-primary" type="button" @click="generateJSON">Сгенерировать JSON</button>
           </div>
         </div>
       </form>
@@ -126,6 +122,7 @@
 <script>
 import QuestionFormFieldSelect from "./QuestionFormFieldSelect.vue";
 import QuestionFormField from "./QuestionFormField.vue";
+import DbService from "../services/DbService";
 
 export default {
   name: "Form",
@@ -134,16 +131,6 @@ export default {
     QuestionFormField
   },
   props: {
-    typeAnswers: Array,
-    chapters: Array,
-    sections: Array,
-    units: Array,
-    paragraphs: Array,
-    difficulties: Array,
-    onChapterChange: Function,
-    onSectionChange: Function,
-    onParagraphChange: Function,
-    onGenerateClick: Function,
     onChapterAdd: Function,
     onQuestionAdd: Function,
     onSectionAdd: Function,
@@ -152,6 +139,20 @@ export default {
   },
   data() {
     return {
+      sections: [],
+      paragraphs: [],
+      units: [],
+      difficulties: [
+        { id: 1, name: "Уровень 1" },
+        { id: 2, name: "Уровень 2" },
+        { id: 3, name: "Уровень 3" }
+      ],
+      typeAnswers: [
+        { id: "one", name: "Один вариант ответа" },
+        { id: "many", name: "Несколько вариантов" },
+        { id: "open", name: "Открытый ответ" }
+      ],
+      chapters: [],
       chapterId: "",
       sectionId: "",
       paragraphId: "",
@@ -162,6 +163,12 @@ export default {
       typeAnswer: "",
       answer: ""
     };
+  },
+  created() {
+    DbService.getChapters()
+      .then(res => (this.chapters = res.data))
+      // eslint-disable-next-line
+      .catch(error => console.error(error));
   },
   methods: {
     addQuestion() {
@@ -183,7 +190,40 @@ export default {
       this.onParagraphAdd(name, this.sectionId);
     },
     addUnit(name, difficulty, hint) {
-      this.onUnitAdd(name,  difficulty, this.paragraphId, hint);
+      this.onUnitAdd(name, difficulty, this.paragraphId, hint);
+    },
+    onChapterChange(chapterId) {
+      DbService.getSections(chapterId)
+        .then(res => {
+          this.sections = res.data;
+        })
+        // eslint-disable-next-line
+        .catch(error => console.error(error));
+    },
+    onSectionChange(sectionId) {
+      DbService.getParagraphs(sectionId)
+        .then(res => {
+          this.paragraphs = res.data;
+        })
+        // eslint-disable-next-line
+        .catch(error => console.error(error));
+    },
+    onParagraphChange(paragraphId) {
+      DbService.getUnits(paragraphId)
+        .then(res => {
+          this.units = res.data;
+        })
+        // eslint-disable-next-line
+        .catch(error => console.error(error));
+    },
+    generateJSON() {
+      DbService.generateJSON()
+        .then(res => {
+          alert("JSON сгенерирован!");
+          // eslint-disable-next-line
+          console.log(res.data);
+        }) // eslint-disable-next-line
+        .catch(error => console.error(error));
     }
   }
 };

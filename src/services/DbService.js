@@ -4,13 +4,35 @@ const apiClient = axios.create({
   baseURL: `http://localhost:3000/api/`
 });
 
-export const getChapters = () => apiClient.get("/chapters");
-export const generateJSON = () => apiClient.get("/questions");
-export const getSections = value => apiClient.get(`/sections/?chapterId=${value}`);
-export const getParagraphs = value => apiClient.get(`/paragraphs/?sectionId=${value}`);
-export const getUnits = value => apiClient.get(`/units/?paragraphId=${value}`);
-export const addQuestion = data => apiClient.post("/questions", { data });
-export const addChapter = data => apiClient.post("/chapters", { data });
-export const addParagraph = data => apiClient.post("/paragraphs", { data });
-export const addSection = data => apiClient.post("/sections", { data });
-export const addUnit = data => apiClient.post("/units", { data });
+export default {
+  getChapters() {
+    return apiClient.get("/chapters");
+  },
+  generateJSON() {
+    return apiClient.get("/questions");
+  },
+  getSections(value) {
+    return apiClient.get(`/sections/?chapterId=${value}`);
+  },
+  getParagraphs(value) {
+    return apiClient.get(`/paragraphs/?sectionId=${value}`);
+  },
+  getUnits(value) {
+    return apiClient.get(`/units/?paragraphId=${value}`);
+  },
+  addQuestion(data) {
+    return apiClient.post("/questions", { data });
+  },
+  addChapter(data) {
+    return apiClient.post("/chapters", { data });
+  },
+  addParagraph(data) {
+    return apiClient.post("/paragraphs", { data });
+  },
+  addSection(data) {
+    return apiClient.post("/sections", { data });
+  },
+  addUnit(data) {
+    return apiClient.post("/units", { data });
+  }
+};
