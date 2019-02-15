@@ -3,35 +3,39 @@
     <div class="box">
       <form @submit.prevent="onSubmit">
         <question-form-field-select :on-submit="addChapter" title="Глава" hasAddon>
-          <select @change="onChapterSelect(chapterId)" v-model="chapterId">
+          <select @change="onChapterSelect(chapterId)" v-model.number="chapterId">
             <option disabled value>Выберите главу</option>
             <option
-              :key="chapter.id"
               v-for="chapter in chapters"
+              :key="chapter.id"
               :value="chapter.id"
             >{{ chapter.name }}</option>
           </select>
         </question-form-field-select>
         <question-form-field-select :on-submit="addSection" title="Раздел" hasAddon>
-          <select :disabled="!chapterId" @change="onSectionSelect(sectionId)" v-model="sectionId">
+          <select
+            v-model.number="sectionId"
+            :disabled="!chapterId"
+            @change="onSectionSelect(sectionId)"
+          >
             <option disabled value>Выберите раздел</option>
             <option
-              :key="section.id"
               v-for="section in sections"
+              :key="section.id"
               :value="section.id"
             >{{ section.name }}</option>
           </select>
         </question-form-field-select>
         <question-form-field-select :on-submit="addParagraph" title="Параграф" hasAddon>
           <select
+            v-model.number="paragraphId"
             :disabled="!sectionId"
             @change="onParagraphSelect(paragraphId)"
-            v-model="paragraphId"
           >
             <option disabled value>Выберите параграф</option>
             <option
-              :key="paragraph.id"
               v-for="paragraph in paragraphs"
+              :key="paragraph.id"
               :value="paragraph.id"
             >{{ paragraph.name }}</option>
           </select>
@@ -42,11 +46,11 @@
           title="Задание"
           hasAddon
         >
-          <select :disabled="!paragraphId" v-model="unitId">
+          <select :disabled="!paragraphId" v-model.number="unitId">
             <option disabled value>Выберите задание</option>
             <option
-              :key="unit.id"
               v-for="unit in units"
+              :key="unit.id"
               :value="unit.id"
             >{{ unit.name }} ({{unit.hint}}) Сложность: {{unit.difficulty}}</option>
           </select>
@@ -57,8 +61,8 @@
               <select v-model="typeAnswer">
                 <option disabled value>Выберите тип</option>
                 <option
-                  :key="typeAnswer.id"
                   v-for="typeAnswer in typeAnswers"
+                  :key="typeAnswer.id"
                   :value="typeAnswer.id"
                 >{{ typeAnswer.name }}</option>
               </select>
@@ -66,11 +70,11 @@
           </div>
           <div class="column">
             <question-form-field-select title="Сложность" :hasAddon="false">
-              <select v-model="difficulty">
+              <select v-model.number="difficulty">
                 <option disabled value>Выберите сложность</option>
                 <option
-                  :key="difficulty.id"
                   v-for="difficulty in difficulties"
+                  :key="difficulty.id"
                   :value="difficulty.id"
                 >{{ difficulty.name }}</option>
               </select>
@@ -79,26 +83,26 @@
         </div>
         <question-form-field title="Вопрос">
           <textarea
-            v-model="name"
             placeholder="Введите текст вопроса"
             class="textarea"
             cols="30"
             rows="5"
+            v-model.trim="name"
           ></textarea>
         </question-form-field>
         <question-form-field title="Подсказка">
           <textarea
-            v-model="hint"
             placeholder="Введите подсказку к вопросу"
             class="textarea"
             cols="30"
             rows="5"
+            v-model.trim="hint"
           ></textarea>
         </question-form-field>
         <div class="field">
           <label class="label">Введите правильный ответ</label>
           <div class="control">
-            <input type="text" v-model="answer" class="input">
+            <input type="text" v-model.trim="answer" class="input">
           </div>
         </div>
         <div class="field is-grouped">
@@ -197,8 +201,8 @@ export default {
       const paragraph = { name, sectionId: this.sectionId };
       this.$emit("paragraph-added", paragraph);
     },
-    addUnit(data) {
-      const unit = { ...data, paragraphId: this.paragraphId, hint };
+    addUnit(name, difficulty, hint) {
+      const unit = { name, paragraphId: this.paragraphId, difficulty, hint };
       this.$emit("unit-added", unit);
     },
     onChapterSelect(chapterId) {
