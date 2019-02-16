@@ -160,7 +160,7 @@
 <script>
 import QuestionFormFieldSelect from './QuestionFormFieldSelect.vue'
 import QuestionFormField from './QuestionFormField.vue'
-import DbService from '../services/DbService'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Form',
@@ -176,21 +176,13 @@ export default {
         { id: 'one', name: 'Один вариант ответа' },
         { id: 'many', name: 'Несколько вариантов' },
         { id: 'open', name: 'Открытый ответ' }
-      ],
-      sections: null,
-      paragraphs: null,
-      units: null,
-      chapters: null
+      ]
     }
   },
   created() {
-    DbService.getChapters()
-      .then(res => {
-        this.chapters = res.data
-      })
-      // eslint-disable-next-line
-      .catch(error => console.error(error))
+    this.$store.dispatch('fetchChapters')
   },
+  computed: mapState(['chapters', 'sections', 'paragraphs', 'units']),
   methods: {
     createFreshQuestionObject() {
       return {
@@ -226,28 +218,13 @@ export default {
       this.$emit('unit-added', unit)
     },
     onChapterSelect(chapterId) {
-      DbService.getSections(chapterId)
-        .then(res => {
-          this.sections = res.data
-        })
-        // eslint-disable-next-line
-        .catch(error => console.error(error))
+      this.$store.dispatch('fetchSections', chapterId)
     },
     onSectionSelect(sectionId) {
-      DbService.getParagraphs(sectionId)
-        .then(res => {
-          this.paragraphs = res.data
-        })
-        // eslint-disable-next-line
-        .catch(error => console.error(error))
+      this.$store.dispatch('fetchParagraphs', sectionId)
     },
     onParagraphSelect(paragraphId) {
-      DbService.getUnits(paragraphId)
-        .then(res => {
-          this.units = res.data
-        })
-        // eslint-disable-next-line
-        .catch(error => console.error(error))
+      this.$store.dispatch('fetchUnits', paragraphId)
     },
     onGenerateClick() {
       this.$emit('json-generated')
