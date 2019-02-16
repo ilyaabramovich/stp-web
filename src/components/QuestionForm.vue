@@ -8,7 +8,7 @@
           hasAddon
         >
           <select
-            @change="onChapterSelect(question.chapterId)"
+            @change="onChapterChange(question.chapterId)"
             v-model.number="question.chapterId"
           >
             <option disabled value>Выберите главу</option>
@@ -28,7 +28,7 @@
           <select
             v-model.number="question.sectionId"
             :disabled="!question.chapterId"
-            @change="onSectionSelect(question.sectionId)"
+            @change="onSectionChange(question.sectionId)"
           >
             <option disabled value>Выберите раздел</option>
             <option
@@ -47,7 +47,7 @@
           <select
             v-model.number="question.paragraphId"
             :disabled="!question.sectionId"
-            @change="onParagraphSelect(question.paragraphId)"
+            @change="onParagraphChange(question.paragraphId)"
           >
             <option disabled value>Выберите параграф</option>
             <option
@@ -217,13 +217,13 @@ export default {
       const unit = { name, paragraphId: this.paragraphId, difficulty, hint }
       this.$emit('unit-added', unit)
     },
-    onChapterSelect(chapterId) {
+    onChapterChange(chapterId) {
       this.$store.dispatch('fetchSections', chapterId)
     },
-    onSectionSelect(sectionId) {
+    onSectionChange(sectionId) {
       this.$store.dispatch('fetchParagraphs', sectionId)
     },
-    onParagraphSelect(paragraphId) {
+    onParagraphChange(paragraphId) {
       this.$store.dispatch('fetchUnits', paragraphId)
     },
     onGenerateClick() {
