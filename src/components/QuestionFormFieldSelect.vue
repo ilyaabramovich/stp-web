@@ -42,7 +42,6 @@
 <script>
 import QuestionFormField from "./QuestionFormField";
 import QuestionFormAddModal from "./QuestionFormAddModal";
-import { mapState } from "vuex";
 
 export default {
   name: "QuestionFormFieldSelect",
@@ -58,6 +57,7 @@ export default {
   },
   data() {
     return {
+      difficulties: this.$store.state.difficulties,
       name: "",
       difficulty: "",
       hint: ""
@@ -66,8 +66,7 @@ export default {
   computed: {
     forUnit() {
       return this.title === "Задание";
-    },
-    ...mapState(["difficulties"])
+    }
   },
   methods: {
     handleSubmit() {

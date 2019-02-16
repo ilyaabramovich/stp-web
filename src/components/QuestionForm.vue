@@ -126,7 +126,6 @@
 import QuestionFormFieldSelect from "./QuestionFormFieldSelect.vue";
 import QuestionFormField from "./QuestionFormField.vue";
 import DbService from "../services/DbService";
-import { mapState } from "vuex";
 
 export default {
   name: "Form",
@@ -136,6 +135,12 @@ export default {
   },
   data() {
     return {
+      difficulties: this.$store.state.difficulties,
+      typeAnswers: [
+        { id: "one", name: "Один вариант ответа" },
+        { id: "many", name: "Несколько вариантов" },
+        { id: "open", name: "Открытый ответ" }
+      ],
       sections: null,
       paragraphs: null,
       units: null,
@@ -151,7 +156,6 @@ export default {
       answer: null
     };
   },
-  computed: mapState(["difficulties", "typeAnswers"]),
   created() {
     DbService.getChapters()
       .then(res => {

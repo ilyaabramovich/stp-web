@@ -9,11 +9,6 @@ export default new Vuex.Store({
       { id: 1, name: "Уровень 1" },
       { id: 2, name: "Уровень 2" },
       { id: 3, name: "Уровень 3" }
-    ],
-    typeAnswers: [
-      { id: "one", name: "Один вариант ответа" },
-      { id: "many", name: "Несколько вариантов" },
-      { id: "open", name: "Открытый ответ" }
     ]
   }
 });

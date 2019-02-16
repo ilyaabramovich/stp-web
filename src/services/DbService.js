@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: `http://localhost:3000/api/`
+  baseURL: `http://localhost:3000/api`
 });
 
 export default {
@@ -11,28 +11,28 @@ export default {
   generateJSON() {
     return apiClient.get("/questions");
   },
-  getSections(value) {
-    return apiClient.get(`/sections/?chapterId=${value}`);
+  getSections(chapterId) {
+    return apiClient.get(`/sections/?chapterId=${chapterId}`);
   },
-  getParagraphs(value) {
-    return apiClient.get(`/paragraphs/?sectionId=${value}`);
+  getParagraphs(sectionId) {
+    return apiClient.get(`/paragraphs/?sectionId=${sectionId}`);
   },
-  getUnits(value) {
-    return apiClient.get(`/units/?paragraphId=${value}`);
+  getUnits(paragraphId) {
+    return apiClient.get(`/units/?paragraphId=${paragraphId}`);
   },
-  addQuestion(data) {
-    return apiClient.post("/questions", data);
+  addQuestion(question) {
+    return apiClient.post("/questions", question);
   },
-  addChapter(data) {
-    return apiClient.post("/chapters", data);
+  addChapter(chapter) {
+    return apiClient.post("/chapters", chapter);
   },
-  addParagraph(data) {
-    return apiClient.post("/paragraphs", data);
+  addParagraph(paragraph) {
+    return apiClient.post("/paragraphs", paragraph);
   },
-  addSection(data) {
-    return apiClient.post("/sections", data);
+  addSection(section) {
+    return apiClient.post("/sections", section);
   },
-  addUnit(data) {
-    return apiClient.post("/units", data);
+  addUnit(unit) {
+    return apiClient.post("/units", unit);
   }
 };
