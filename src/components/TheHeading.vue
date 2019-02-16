@@ -10,7 +10,6 @@
 
 <script>
 export default {
-  name: "TheHeading"
-};
+  name: 'TheHeading'
+}
 </script>
-

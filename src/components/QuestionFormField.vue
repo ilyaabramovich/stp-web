@@ -1,6 +1,6 @@
 <template>
   <div class="field">
-    <label class="label">{{title}}</label>
+    <label class="label">{{ title }}</label>
     <div class="control">
       <slot></slot>
     </div>
@@ -9,10 +9,9 @@
 
 <script>
 export default {
-  name: "QuestionFormField",
+  name: 'QuestionFormField',
   props: {
     title: String
   }
-};
+}
 </script>
-

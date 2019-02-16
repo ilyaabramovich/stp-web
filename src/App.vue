@@ -13,12 +13,12 @@
 </template>
 
 <script>
-import TheHeading from "./components/TheHeading.vue";
-import QuestionForm from "./components/QuestionForm.vue";
-import DbService from "./services/DbService";
+import TheHeading from './components/TheHeading.vue'
+import QuestionForm from './components/QuestionForm.vue'
+import DbService from './services/DbService'
 
 export default {
-  name: "app",
+  name: 'app',
   components: {
     QuestionForm,
     TheHeading
@@ -27,56 +27,55 @@ export default {
     generateJSON() {
       DbService.generateJSON()
         .then(res => {
-          alert("JSON сгенерирован!");
+          alert('JSON сгенерирован!')
           // eslint-disable-next-line
-          console.log(res.data);
+          console.log(res.data)
         }) // eslint-disable-next-line
-        .catch(error => console.error(error));
+        .catch(error => console.error(error))
     },
     addChapter(chapter) {
       DbService.addChapter(chapter)
         .then(() => {
-          alert("Глава добавлена!");
+          alert('Глава добавлена!')
           // eslint-disable-next-line
         }) // eslint-disable-next-line
-        .catch(error => console.error(error));
+        .catch(error => console.error(error))
     },
     addSection(section) {
       DbService.addSection(section)
         .then(() => {
-          alert("Раздел добавлен!");
+          alert('Раздел добавлен!')
           // eslint-disable-next-line
         }) // eslint-disable-next-line
-        .catch(error => console.error(error));
+        .catch(error => console.error(error))
     },
     addParagraph(paragraph) {
       DbService.addParagraph(paragraph)
         .then(() => {
-          alert("Параграф добавлен!");
+          alert('Параграф добавлен!')
           // eslint-disable-next-line
         }) // eslint-disable-next-line
-        .catch(error => console.error(error));
+        .catch(error => console.error(error))
     },
     addUnit(unit) {
       DbService.addUnit(unit)
         .then(() => {
-          alert("Задание добавлено!");
+          alert('Задание добавлено!')
           // eslint-disable-next-line
         }) // eslint-disable-next-line
-        .catch(error => console.error(error));
+        .catch(error => console.error(error))
     },
     addQuestion(question) {
       DbService.addQuestion(question)
         .then(() => {
-          alert("Вопрос добавлен!");
+          alert('Вопрос добавлен!')
           // eslint-disable-next-line
         })
         // eslint-disable-next-line
-        .catch(error => console.error(error));
+        .catch(error => console.error(error))
     }
   }
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

@@ -8,20 +8,25 @@
       </div>
       <div v-if="hasAddon" class="control">
         <question-form-add-modal
-          :disabled="forUnit?!(name&&difficulty&&hint):!(name)"
+          :disabled="forUnit ? !(name && difficulty && hint) : !name"
           :on-submit="handleSubmit"
         >
           <question-form-field title="Введите название">
-            <input v-model="name" type="text" class="input">
+            <input v-model="name" type="text" class="input" />
           </question-form-field>
-          <question-form-field-select v-if="forUnit" title="Сложность" :hasAddon="false">
+          <question-form-field-select
+            v-if="forUnit"
+            title="Сложность"
+            :hasAddon="false"
+          >
             <select v-model="difficulty">
               <option disabled value>Выберите сложность</option>
               <option
                 :key="difficulty.id"
                 v-for="difficulty in difficulties"
                 :value="difficulty.id"
-              >{{ difficulty.name }}</option>
+                >{{ difficulty.name }}</option
+              >
             </select>
           </question-form-field-select>
           <question-form-field v-if="forUnit" title="Подсказка">
@@ -40,11 +45,11 @@
 </template>
 
 <script>
-import QuestionFormField from "./QuestionFormField";
-import QuestionFormAddModal from "./QuestionFormAddModal";
+import QuestionFormField from './QuestionFormField'
+import QuestionFormAddModal from './QuestionFormAddModal'
 
 export default {
-  name: "QuestionFormFieldSelect",
+  name: 'QuestionFormFieldSelect',
   components: {
     QuestionFormField,
     QuestionFormAddModal
@@ -58,28 +63,28 @@ export default {
   data() {
     return {
       difficulties: this.$store.state.difficulties,
-      name: "",
-      difficulty: "",
-      hint: ""
-    };
+      name: '',
+      difficulty: '',
+      hint: ''
+    }
   },
   computed: {
     forUnit() {
-      return this.title === "Задание";
+      return this.title === 'Задание'
     }
   },
   methods: {
     handleSubmit() {
       if (!this.forUnit) {
-        this.onSubmit(this.name);
-        this.name = "";
+        this.onSubmit(this.name)
+        this.name = ''
       } else {
-        this.onSubmit(this.name, this.difficulty, this.hint);
-        this.name = "";
-        this.difficulty = "";
-        this.hint = "";
+        this.onSubmit(this.name, this.difficulty, this.hint)
+        this.name = ''
+        this.difficulty = ''
+        this.hint = ''
       }
     }
   }
-};
+}
 </script>

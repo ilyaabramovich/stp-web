@@ -1,7 +1,7 @@
 <template>
   <section>
     <button type="button" class="button is-info" @click="show">Добавить</button>
-    <div class="modal" :class="{'is-active':isActive}">
+    <div class="modal" :class="{ 'is-active': isActive }">
       <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
@@ -16,7 +16,9 @@
             class="button is-success"
             type="button"
             @click="handleSubmit"
-          >Добавить</button>
+          >
+            Добавить
+          </button>
         </footer>
       </div>
     </div>
@@ -25,7 +27,7 @@
 
 <script>
 export default {
-  name: "QuestionFormAddModal",
+  name: 'QuestionFormAddModal',
   props: {
     onSubmit: Function,
     disabled: Boolean
@@ -33,22 +35,21 @@ export default {
   data() {
     return {
       isActive: false
-    };
+    }
   },
   methods: {
     show() {
-      this.isActive = true;
+      this.isActive = true
     },
     handleSubmit() {
-      this.onSubmit();
-      this.hide();
+      this.onSubmit()
+      this.hide()
     },
     hide() {
-      this.isActive = false;
+      this.isActive = false
     }
   }
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>
