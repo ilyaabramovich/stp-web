@@ -40,12 +40,7 @@
             >{{ paragraph.name }}</option>
           </select>
         </question-form-field-select>
-        <question-form-field-select
-          :difficulties="difficulties"
-          :on-submit="addUnit"
-          title="Задание"
-          hasAddon
-        >
+        <question-form-field-select :on-submit="addUnit" title="Задание" hasAddon>
           <select :disabled="!paragraphId" v-model.number="unitId">
             <option disabled value>Выберите задание</option>
             <option
@@ -131,6 +126,7 @@
 import QuestionFormFieldSelect from "./QuestionFormFieldSelect.vue";
 import QuestionFormField from "./QuestionFormField.vue";
 import DbService from "../services/DbService";
+import { mapState } from "vuex";
 
 export default {
   name: "Form",
@@ -143,16 +139,6 @@ export default {
       sections: null,
       paragraphs: null,
       units: null,
-      difficulties: [
-        { id: 1, name: "Уровень 1" },
-        { id: 2, name: "Уровень 2" },
-        { id: 3, name: "Уровень 3" }
-      ],
-      typeAnswers: [
-        { id: "one", name: "Один вариант ответа" },
-        { id: "many", name: "Несколько вариантов" },
-        { id: "open", name: "Открытый ответ" }
-      ],
       chapters: null,
       chapterId: null,
       sectionId: null,
@@ -165,6 +151,7 @@ export default {
       answer: null
     };
   },
+  computed: mapState(["difficulties", "typeAnswers"]),
   created() {
     DbService.getChapters()
       .then(res => {
