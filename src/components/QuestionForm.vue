@@ -3,7 +3,7 @@
     <div class="box">
       <form @submit.prevent="onSubmit">
         <question-form-field-select :on-submit="addChapter" title="Глава" hasAddon>
-          <select @change="onChapterSelect(chapterId)" v-model.number="chapterId">
+          <select @change="onChapterSelect(question.chapterId)" v-model.number="question.chapterId">
             <option disabled value>Выберите главу</option>
             <option
               v-for="chapter in chapters"
@@ -14,9 +14,9 @@
         </question-form-field-select>
         <question-form-field-select :on-submit="addSection" title="Раздел" hasAddon>
           <select
-            v-model.number="sectionId"
-            :disabled="!chapterId"
-            @change="onSectionSelect(sectionId)"
+            v-model.number="question.sectionId"
+            :disabled="!question.chapterId"
+            @change="onSectionSelect(question.sectionId)"
           >
             <option disabled value>Выберите раздел</option>
             <option
@@ -28,9 +28,9 @@
         </question-form-field-select>
         <question-form-field-select :on-submit="addParagraph" title="Параграф" hasAddon>
           <select
-            v-model.number="paragraphId"
-            :disabled="!sectionId"
-            @change="onParagraphSelect(paragraphId)"
+            v-model.number="question.paragraphId"
+            :disabled="!question.sectionId"
+            @change="onParagraphSelect(question.paragraphId)"
           >
             <option disabled value>Выберите параграф</option>
             <option
@@ -41,7 +41,7 @@
           </select>
         </question-form-field-select>
         <question-form-field-select :on-submit="addUnit" title="Задание" hasAddon>
-          <select :disabled="!paragraphId" v-model.number="unitId">
+          <select :disabled="!question.paragraphId" v-model.number="question.unitId">
             <option disabled value>Выберите задание</option>
             <option
               v-for="unit in units"
@@ -53,7 +53,7 @@
         <div class="columns">
           <div class="column is-three-quarters">
             <question-form-field-select title="Тип вопроса" :hasAddon="false">
-              <select v-model="typeAnswer">
+              <select v-model="question.typeAnswer">
                 <option disabled value>Выберите тип</option>
                 <option
                   v-for="typeAnswer in typeAnswers"
@@ -65,7 +65,7 @@
           </div>
           <div class="column">
             <question-form-field-select title="Сложность" :hasAddon="false">
-              <select v-model.number="difficulty">
+              <select v-model.number="question.difficulty">
                 <option disabled value>Выберите сложность</option>
                 <option
                   v-for="difficulty in difficulties"
@@ -82,7 +82,7 @@
             class="textarea"
             cols="30"
             rows="5"
-            v-model.trim="name"
+            v-model.trim="question.name"
           ></textarea>
         </question-form-field>
         <question-form-field title="Подсказка">
@@ -91,20 +91,20 @@
             class="textarea"
             cols="30"
             rows="5"
-            v-model.trim="hint"
+            v-model.trim="question.hint"
           ></textarea>
         </question-form-field>
         <div class="field">
           <label class="label">Введите правильный ответ</label>
           <div class="control">
-            <input type="text" v-model.trim="answer" class="input">
+            <input type="text" v-model.trim="question.answer" class="input">
           </div>
         </div>
         <div class="field is-grouped">
           <div class="control">
             <input
               class="button is-success"
-              :disabled="!(answer&&name&&unitId&&hint)"
+              :disabled="!(question.answer&&question.name&&question.unitId&&question.hint)"
               type="submit"
               value="Добавить вопрос"
             >
@@ -135,6 +135,7 @@ export default {
   },
   data() {
     return {
+      question: this.createFreshQuestionObject(),
       difficulties: this.$store.state.difficulties,
       typeAnswers: [
         { id: "one", name: "Один вариант ответа" },
@@ -144,16 +145,7 @@ export default {
       sections: null,
       paragraphs: null,
       units: null,
-      chapters: null,
-      chapterId: null,
-      sectionId: null,
-      paragraphId: null,
-      hint: null,
-      unitId: null,
-      name: null,
-      difficulty: null,
-      typeAnswer: null,
-      answer: null
+      chapters: null
     };
   },
   created() {
@@ -165,20 +157,22 @@ export default {
       .catch(error => console.error(error));
   },
   methods: {
-    onSubmit() {
-      const question = {
-        unitId: this.unitId,
-        name: this.name,
-        hint: this.hint,
-        typeAnswer: this.typeAnswer,
-        answer: this.answer
+    createFreshQuestionObject() {
+      return {
+        chapterId: "",
+        sectionId: "",
+        paragraphId: "",
+        hint: "",
+        unitId: "",
+        name: "",
+        difficulty: "",
+        typeAnswer: "",
+        answer: ""
       };
-      this.unitId = null;
-      this.name = null;
-      this.hint = null;
-      this.typeAnswer = null;
-      this.answer = null;
-      this.$emit("question-added", question);
+    },
+    onSubmit() {
+      this.$emit("question-added", this.question);
+      this.question = this.createFreshQuestionObject();
     },
     addChapter(name) {
       const chapter = { name };
