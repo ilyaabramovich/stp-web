@@ -21,13 +21,13 @@
           </select>
         </question-form-field-select>
         <question-form-field-select
+          v-if="question.chapterId"
           :on-submit="createSection"
           title="Раздел"
           hasAddon
         >
           <select
             v-model.number="question.sectionId"
-            :disabled="!question.chapterId"
             @change="onSectionChange(question.sectionId)"
           >
             <option disabled value>Выберите раздел</option>
@@ -41,12 +41,12 @@
         </question-form-field-select>
         <question-form-field-select
           :on-submit="createParagraph"
+          v-if="question.sectionId"
           title="Параграф"
           hasAddon
         >
           <select
             v-model.number="question.paragraphId"
-            :disabled="!question.sectionId"
             @change="onParagraphChange(question.paragraphId)"
           >
             <option disabled value>Выберите параграф</option>
@@ -59,14 +59,12 @@
           </select>
         </question-form-field-select>
         <question-form-field-select
+          v-if="question.paragraphId"
           :on-submit="createUnit"
           title="Задание"
           hasAddon
         >
-          <select
-            :disabled="!question.paragraphId"
-            v-model.number="question.unitId"
-          >
+          <select v-model.number="question.unitId">
             <option disabled value>Выберите задание</option>
             <option v-for="unit in units" :key="unit.id" :value="unit.id">
               {{ unit.name }} ({{ unit.hint }}) Сложность:
@@ -107,7 +105,7 @@
             placeholder="Введите текст вопроса"
             class="textarea"
             cols="30"
-            rows="5"
+            rows="2"
             v-model.trim="question.name"
           ></textarea>
         </question-form-field>
@@ -116,7 +114,7 @@
             placeholder="Введите подсказку к вопросу"
             class="textarea"
             cols="30"
-            rows="5"
+            rows="2"
             v-model.trim="question.hint"
           ></textarea>
         </question-form-field>
@@ -148,7 +146,7 @@
               type="button"
               @click="onGenerateClick"
             >
-              Сгенерировать JSON
+              Сгенерировать тест .json
             </button>
           </div>
         </div>
