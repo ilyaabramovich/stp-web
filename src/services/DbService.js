@@ -8,8 +8,8 @@ export default {
   getChapters() {
     return apiClient.get('/chapters')
   },
-  generateJSON() {
-    return apiClient.get('/questions')
+  getTests() {
+    return apiClient.get('/tests')
   },
   getSections(chapterId) {
     return apiClient.get(`/sections/?chapterId=${chapterId}`)

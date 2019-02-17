@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
+  <section class="section">
     <div class="box">
       <form @submit.prevent="onSubmit">
         <question-form-field-select
-          :on-submit="addChapter"
+          :on-submit="createChapter"
           title="Глава"
           hasAddon
         >
@@ -21,7 +21,7 @@
           </select>
         </question-form-field-select>
         <question-form-field-select
-          :on-submit="addSection"
+          :on-submit="createSection"
           title="Раздел"
           hasAddon
         >
@@ -40,7 +40,7 @@
           </select>
         </question-form-field-select>
         <question-form-field-select
-          :on-submit="addParagraph"
+          :on-submit="createParagraph"
           title="Параграф"
           hasAddon
         >
@@ -59,7 +59,7 @@
           </select>
         </question-form-field-select>
         <question-form-field-select
-          :on-submit="addUnit"
+          :on-submit="createUnit"
           title="Задание"
           hasAddon
         >
@@ -154,7 +154,7 @@
         </div>
       </form>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -198,24 +198,29 @@ export default {
       }
     },
     onSubmit() {
-      this.$emit('question-added', this.question)
+      this.$store.dispatch('createQuestion', this.question)
       this.question = this.createFreshQuestionObject()
     },
-    addChapter(name) {
+    createChapter(name) {
       const chapter = { name }
-      this.$emit('chapter-added', chapter)
+      this.$store.dispatch('createChapter', chapter)
     },
-    addSection(name) {
-      const section = { name }
-      this.$emit('section-added', section)
+    createSection(name) {
+      const section = { name, chapterId: this.question.chapterId }
+      this.$store.dispatch('createSection', section)
     },
-    addParagraph(name) {
-      const paragraph = { name, sectionId: this.sectionId }
-      this.$emit('paragraph-added', paragraph)
+    createParagraph(name) {
+      const paragraph = { name, sectionId: this.question.sectionId }
+      this.$store.dispatch('createParagraph', paragraph)
     },
-    addUnit(name, difficulty, hint) {
-      const unit = { name, paragraphId: this.paragraphId, difficulty, hint }
-      this.$emit('unit-added', unit)
+    createUnit(name, difficulty, hint) {
+      const unit = {
+        name,
+        paragraphId: this.question.paragraphId,
+        difficulty,
+        hint
+      }
+      this.$store.dispatch('createUnit', unit)
     },
     onChapterChange(chapterId) {
       this.$store.dispatch('fetchSections', chapterId)
@@ -227,7 +232,7 @@ export default {
       this.$store.dispatch('fetchUnits', paragraphId)
     },
     onGenerateClick() {
-      this.$emit('json-generated')
+      this.$store.dispatch('fetchTests')
     }
   }
 }
