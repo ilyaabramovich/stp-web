@@ -153,7 +153,11 @@
             </button>
           </div>
           <div class="control">
-            <button class="button" type="button" @click="onGenerateClick">
+            <button
+              class="button is-primary is-outlined"
+              type="button"
+              @click="onGenerateClick"
+            >
               Сгенерировать тест .json
             </button>
           </div>

@@ -52,7 +52,7 @@
         <footer class="modal-card-foot">
           <button
             :disabled="forUnit ? !(name && difficulty && hint) : !name"
-            class="button is-success"
+            class="button is-primary"
             type="button"
             @click="handleSubmit"
           >
