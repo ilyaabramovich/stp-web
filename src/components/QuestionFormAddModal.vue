@@ -1,9 +1,16 @@
 <template>
-  <div class="container">
+  <div>
     <div class="modal is-active">
       <div class="modal-background"></div>
-      <div class="modal-content">
-        <div class="box">
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <button
+            class="delete is-large"
+            aria-label="close"
+            @click="$emit('close')"
+          ></button>
+        </header>
+        <section class="modal-card-body">
           <question-form-field>
             <template v-slot:label
               >Введите название</template
@@ -12,17 +19,22 @@
           </question-form-field>
 
           <div v-if="forUnit">
-            <question-form-field-select title="Сложность" :hasAddon="false">
-              <select v-model="difficulty">
-                <option disabled value>Выберите сложность</option>
-                <option
-                  :key="difficulty.id"
-                  v-for="difficulty in difficulties"
-                  :value="difficulty.id"
-                  >{{ difficulty.name }}</option
-                >
-              </select>
-            </question-form-field-select>
+            <question-form-field>
+              <template v-slot:label
+                >Сложность</template
+              >
+              <div class="select is-fullwidth">
+                <select v-model="difficulty">
+                  <option disabled value>Выберите сложность</option>
+                  <option
+                    :key="difficulty.id"
+                    v-for="difficulty in difficulties"
+                    :value="difficulty.id"
+                    >{{ difficulty.name }}</option
+                  >
+                </select>
+              </div>
+            </question-form-field>
             <question-form-field>
               <template v-slot:label
                 >Подсказка</template
@@ -32,40 +44,33 @@
                 placeholder="Введите подсказку к заданию"
                 class="textarea"
                 cols="30"
-                rows="2"
+                rows="3"
               ></textarea>
             </question-form-field>
           </div>
-          <div class="control">
-            <button
-              :disabled="forUnit ? !(name && difficulty && hint) : !name"
-              class="button is-success"
-              type="button"
-              @click="handleSubmit"
-            >
-              Добавить
-            </button>
-          </div>
-        </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button
+            :disabled="forUnit ? !(name && difficulty && hint) : !name"
+            class="button is-success"
+            type="button"
+            @click="handleSubmit"
+          >
+            Добавить
+          </button>
+        </footer>
       </div>
-      <button
-        class="modal-close is-large"
-        aria-label="close"
-        @click="$emit('close')"
-      ></button>
     </div>
   </div>
 </template>
 
 <script>
 import QuestionFormField from './QuestionFormField'
-import QuestionFormFieldSelect from './QuestionFormFieldSelect.vue'
 
 export default {
   name: 'QuestionFormAddModal',
   components: {
-    QuestionFormField,
-    QuestionFormFieldSelect
+    QuestionFormField
   },
   props: {
     forUnit: Boolean

@@ -1,5 +1,5 @@
 <template>
-  <section class="section">
+  <div class="container">
     <div class="box">
       <form>
         <question-form-field-select :on-submit="createChapter" title="Глава">
@@ -112,7 +112,7 @@
             placeholder="Введите текст вопроса"
             class="textarea"
             cols="30"
-            rows="2"
+            rows="3"
             v-model.trim="question.name"
           ></textarea>
         </question-form-field>
@@ -124,7 +124,7 @@
             placeholder="Введите подсказку к вопросу"
             class="textarea"
             cols="30"
-            rows="2"
+            rows="3"
             v-model.trim="question.hint"
           ></textarea>
         </question-form-field>
@@ -138,7 +138,7 @@
           <div class="control">
             <button
               class="button is-primary"
-              type="submit"
+              type="button"
               :disabled="
                 !(
                   question.answer &&
@@ -147,6 +147,7 @@
                   question.hint
                 )
               "
+              @click="onSubmit"
             >
               Добавить вопрос
             </button>
@@ -159,7 +160,7 @@
         </div>
       </form>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
