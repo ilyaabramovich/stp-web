@@ -3,7 +3,7 @@
     <b-field>
       <b-select
         placeholder="Выберите главу"
-        @input="onChapterChange(question.chapterId)"
+        @input="fetchSections(question.chapterId)"
         v-model.number="question.chapterId"
         expanded
       >
@@ -19,16 +19,16 @@
           Добавить
         </button>
         <b-modal :active.sync="showModalChapter" has-modal-card>
-          <modal-form :on-submit="createChapter"></modal-form>
+          <modal-form @on-submit="createChapter"></modal-form>
         </b-modal>
       </p>
     </b-field>
 
-    <b-field :on-submit="createSection">
+    <b-field @on-submit="createSection">
       <b-select
         placeholder="Выберите раздел"
         v-model.number="question.sectionId"
-        @input="onSectionChange(question.sectionId)"
+        @input="fetchParagraphs(question.sectionId)"
         :disabled="!question.chapterId"
         expanded
       >
@@ -49,16 +49,16 @@
           Добавить
         </button>
         <b-modal :active.sync="showModalSection" has-modal-card>
-          <modal-form :on-submit="createSection"></modal-form>
+          <modal-form @on-submit="createSection"></modal-form>
         </b-modal>
       </p>
     </b-field>
 
-    <b-field :on-submit="createParagraph">
+    <b-field @on-submit="createParagraph">
       <b-select
         placeholder="Выберите параграф"
         v-model.number="question.paragraphId"
-        @input="onParagraphChange(question.paragraphId)"
+        @input="fetchUnits(question.paragraphId)"
         :disabled="!question.sectionId"
         expanded
       >
@@ -79,12 +79,12 @@
           Добавить
         </button>
         <b-modal :active.sync="showModalParagraph" has-modal-card>
-          <modal-form :on-submit="createParagraph"></modal-form>
+          <modal-form @on-submit="createParagraph"></modal-form>
         </b-modal>
       </p>
     </b-field>
 
-    <b-field :on-submit="createUnit" :for-unit="true">
+    <b-field @on-submit="createUnit" :for-unit="true">
       <b-select
         placeholder="Выберите задание"
         v-model.number="question.unitId"
@@ -98,7 +98,7 @@
       </b-select>
       <p class="control">
         <b-modal :active.sync="showModalUnit" has-modal-card>
-          <modal-form-unit :on-submit="createUnit"></modal-form-unit>
+          <modal-form-unit @on-submit="createUnit"></modal-form-unit>
         </b-modal>
         <button
           type="button"
@@ -180,7 +180,7 @@
         <button
           class="button is-primary is-outlined"
           type="button"
-          @click="onGenerateClick"
+          @click="fetchTests"
         >
           Сгенерировать тест .json
         </button>
@@ -280,18 +280,6 @@ export default {
         hint
       }
       this.addUnit(unit)
-    },
-    onChapterChange(chapterId) {
-      this.fetchSections(chapterId)
-    },
-    onSectionChange(sectionId) {
-      this.fetchParagraphs(sectionId)
-    },
-    onParagraphChange(paragraphId) {
-      this.fetchUnits(paragraphId)
-    },
-    onGenerateClick() {
-      this.fetchTests()
     }
   }
 }

@@ -55,15 +55,9 @@ export default {
       difficulties: this.$store.state.difficulties
     }
   },
-  props: {
-    onSubmit: {
-      type: Function,
-      default: () => {}
-    }
-  },
   methods: {
     onAdd() {
-      this.onSubmit(this.name, this.difficulty, this.hint)
+      this.$emit('on-submit', this.name, this.difficulty, this.hint)
       this.name = ''
       this.difficulty = ''
       this.hint = ''

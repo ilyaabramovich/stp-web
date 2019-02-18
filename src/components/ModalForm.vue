@@ -29,15 +29,9 @@ export default {
       name: ''
     }
   },
-  props: {
-    onSubmit: {
-      type: Function,
-      default: () => {}
-    }
-  },
   methods: {
     onAdd() {
-      this.onSubmit(this.name)
+      this.$emit('on-submit', this.name)
       this.name = ''
       this.$parent.close()
       this.$toast.open({
