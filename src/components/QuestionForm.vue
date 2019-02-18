@@ -189,7 +189,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import ModalForm from './ModalForm'
 import ModalFormUnit from './ModalFormUnit'
 
@@ -206,7 +206,6 @@ export default {
       showModalParagraph: false,
       showModalUnit: false,
       question: this.createFreshQuestionObject(),
-      difficulties: this.$store.state.difficulties,
       typeAnswers: [
         { id: 'one', name: 'Один вариант ответа' },
         { id: 'many', name: 'Несколько вариантов' },
@@ -215,10 +214,28 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('fetchChapters')
+    this.fetchChapters()
   },
-  computed: mapState(['chapters', 'sections', 'paragraphs', 'units']),
+  computed: mapState([
+    'chapters',
+    'sections',
+    'paragraphs',
+    'units',
+    'difficulties'
+  ]),
   methods: {
+    ...mapActions([
+      'fetchChapters',
+      'fetchSections',
+      'fetchParagraphs',
+      'fetchUnits',
+      'fetchTests',
+      'createQuestion',
+      'createChapter',
+      'createSection',
+      'createParagraph',
+      'createUnit'
+    ]),
     createFreshQuestionObject() {
       return {
         chapterId: null,
@@ -233,20 +250,20 @@ export default {
       }
     },
     onSubmit() {
-      this.$store.dispatch('createQuestion', this.question)
+      this.createQuestion(this.question)
       this.question = this.createFreshQuestionObject()
     },
     createChapter(name) {
       const chapter = { name }
-      this.$store.dispatch('createChapter', chapter)
+      this.createChapter(chapter)
     },
     createSection(name) {
       const section = { name, chapterId: this.question.chapterId }
-      this.$store.dispatch('createSection', section)
+      this.createSection(section)
     },
     createParagraph(name) {
       const paragraph = { name, sectionId: this.question.sectionId }
-      this.$store.dispatch('createParagraph', paragraph)
+      this.createParagraph(paragraph)
     },
     createUnit(name, difficulty, hint) {
       const unit = {
@@ -255,19 +272,19 @@ export default {
         difficulty,
         hint
       }
-      this.$store.dispatch('createUnit', unit)
+      this.createUnit(unit)
     },
     onChapterChange(chapterId) {
-      this.$store.dispatch('fetchSections', chapterId)
+      this.fetchSections(chapterId)
     },
     onSectionChange(sectionId) {
-      this.$store.dispatch('fetchParagraphs', sectionId)
+      this.fetchParagraphs(sectionId)
     },
     onParagraphChange(paragraphId) {
-      this.$store.dispatch('fetchUnits', paragraphId)
+      this.fetchUnits(paragraphId)
     },
     onGenerateClick() {
-      this.$store.dispatch('fetchTests')
+      this.fetchTests()
     }
   }
 }

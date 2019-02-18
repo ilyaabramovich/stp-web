@@ -56,7 +56,10 @@ export default {
     }
   },
   props: {
-    onSubmit: Function
+    onSubmit: {
+      type: Function,
+      default: () => {}
+    }
   },
   methods: {
     onAdd() {
