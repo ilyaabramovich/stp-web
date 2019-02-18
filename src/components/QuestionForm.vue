@@ -229,13 +229,15 @@ export default {
       'fetchSections',
       'fetchParagraphs',
       'fetchUnits',
-      'fetchTests',
-      'createQuestion',
-      'createChapter',
-      'createSection',
-      'createParagraph',
-      'createUnit'
+      'fetchTests'
     ]),
+    ...mapActions({
+      addQuestion: 'createQuestion',
+      addChapter: 'createChapter',
+      addSection: 'createSection',
+      addParagraph: 'createParagraph',
+      addUnit: 'createUnit'
+    }),
     createFreshQuestionObject() {
       return {
         chapterId: null,
@@ -250,20 +252,20 @@ export default {
       }
     },
     onSubmit() {
-      this.createQuestion(this.question)
+      this.addQuestion(this.question)
       this.question = this.createFreshQuestionObject()
     },
     createChapter(name) {
       const chapter = { name }
-      this.createChapter(chapter)
+      this.addChapter(chapter)
     },
     createSection(name) {
       const section = { name, chapterId: this.question.chapterId }
-      this.createSection(section)
+      this.addSection(section)
     },
     createParagraph(name) {
       const paragraph = { name, sectionId: this.question.sectionId }
-      this.createParagraph(paragraph)
+      this.addParagraph(paragraph)
     },
     createUnit(name, difficulty, hint) {
       const unit = {
@@ -272,7 +274,7 @@ export default {
         difficulty,
         hint
       }
-      this.createUnit(unit)
+      this.addUnit(unit)
     },
     onChapterChange(chapterId) {
       this.fetchSections(chapterId)

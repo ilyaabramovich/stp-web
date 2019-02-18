@@ -48,11 +48,7 @@ export default new Vuex.Store({
   },
   actions: {
     createChapter({ commit }, chapter) {
-      DbService.addChapter(chapter)
-        .then(() => {
-          alert('Глава добавлена')
-        })
-        .catch(error => console.error(error))
+      DbService.addChapter(chapter).catch(error => console.error(error))
       commit('ADD_CHAPTER', chapter)
     },
     fetchChapters({ commit }) {
@@ -63,11 +59,7 @@ export default new Vuex.Store({
         .catch(error => console.error(error))
     },
     createSection({ commit }, section) {
-      DbService.addSection(section)
-        .then(() => {
-          alert('Раздел добавлен')
-        })
-        .catch(error => console.error(error))
+      DbService.addSection(section).catch(error => console.error(error))
       commit('ADD_SECTION', section)
     },
     fetchSections({ commit }, chapterId) {
@@ -78,11 +70,7 @@ export default new Vuex.Store({
         .catch(error => console.error(error))
     },
     createParagraph({ commit }, paragraph) {
-      DbService.addParagraph(paragraph)
-        .then(() => {
-          alert('Параграф добавлен')
-        })
-        .catch(error => console.error(error))
+      DbService.addParagraph(paragraph).catch(error => console.error(error))
       commit('ADD_PARAGRAPH', paragraph)
     },
     fetchParagraphs({ commit }, sectionId) {
@@ -93,11 +81,7 @@ export default new Vuex.Store({
         .catch(error => console.error(error))
     },
     createUnit({ commit }, unit) {
-      DbService.addUnit(unit)
-        .then(() => {
-          alert('Задание добавлено')
-        })
-        .catch(error => console.error(error))
+      DbService.addUnit(unit).catch(error => console.error(error))
       commit('ADD_UNIT', unit)
     },
     fetchUnits({ commit }, paragraphId) {
@@ -108,11 +92,7 @@ export default new Vuex.Store({
         .catch(error => console.error(error))
     },
     createQuestion({ commit }, question) {
-      DbService.addQuestion(question)
-        .then(() => {
-          alert('Вопрос добавлен')
-        })
-        .catch(error => console.error(error))
+      DbService.addQuestion(question).catch(error => console.error(error))
       commit('ADD_QUESTION', question)
     },
     fetchTests() {

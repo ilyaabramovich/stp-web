@@ -40,6 +40,10 @@ export default {
       this.onSubmit(this.name)
       this.name = ''
       this.$parent.close()
+      this.$toast.open({
+        message: 'Успешно добавлено!',
+        type: 'is-success'
+      })
     }
   }
 }

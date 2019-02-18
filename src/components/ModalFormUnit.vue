@@ -68,6 +68,10 @@ export default {
       this.difficulty = ''
       this.hint = ''
       this.$parent.close()
+      this.$toast.open({
+        message: 'Успешно добавлено!',
+        type: 'is-success'
+      })
     }
   }
 }
