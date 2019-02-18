@@ -10,7 +10,6 @@
 
 <script>
 export default {
-  name: 'TheHeading',
-  props: { title: { type: String, default: '' } }
+  name: 'TheHeading'
 }
 </script>

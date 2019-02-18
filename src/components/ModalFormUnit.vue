@@ -35,7 +35,7 @@
         <button
           :disabled="!(name && difficulty && hint)"
           class="button is-primary"
-          @click="onAdd"
+          @click="onSubmit"
         >
           Добавить
         </button>
@@ -56,10 +56,10 @@ export default {
     }
   },
   methods: {
-    onAdd() {
+    onSubmit() {
       this.$emit('on-submit', this.name, this.difficulty, this.hint)
       this.name = ''
-      this.difficulty = ''
+      this.difficulty = null
       this.hint = ''
       this.$parent.close()
       this.$toast.open({

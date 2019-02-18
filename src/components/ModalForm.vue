@@ -13,7 +13,7 @@
         <button class="button" type="button" @click="$parent.close()">
           Close
         </button>
-        <button :disabled="!name" class="button is-primary" @click="onAdd">
+        <button :disabled="!name" class="button is-primary" @click="onSubmit">
           Добавить
         </button>
       </footer>
@@ -30,7 +30,7 @@ export default {
     }
   },
   methods: {
-    onAdd() {
+    onSubmit() {
       this.$emit('on-submit', this.name)
       this.name = ''
       this.$parent.close()
