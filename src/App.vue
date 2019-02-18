@@ -1,7 +1,11 @@
 <template>
   <div id="app">
-    <TheHeading>Добавление вопроса</TheHeading>
-    <QuestionForm />
+    <TheHeading />
+    <div class="container">
+      <div class="box">
+        <QuestionForm />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -10,7 +14,7 @@ import TheHeading from './components/TheHeading.vue'
 import QuestionForm from './components/QuestionForm.vue'
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
     QuestionForm,
     TheHeading
