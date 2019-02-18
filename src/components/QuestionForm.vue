@@ -126,7 +126,7 @@
       </b-select>
 
       <b-select
-        placeholder="Выберите сложность"
+        placeholder="Выберите сложность вопроса"
         v-model.number="question.difficulty"
         expanded
       >
@@ -154,8 +154,11 @@
       ></b-input>
     </b-field>
 
-    <b-field label="Введите правильный ответ">
-      <b-input v-model.trim="question.answer"></b-input>
+    <b-field>
+      <b-input
+        placeholder="Введите правильный ответ"
+        v-model.trim="question.answer"
+      ></b-input>
     </b-field>
 
     <b-field grouped>
@@ -210,7 +213,7 @@ export default {
       typeAnswers: [
         { id: 'one', name: 'Один вариант ответа' },
         { id: 'many', name: 'Несколько вариантов' },
-        { id: 'open', name: 'Открытый ответ' }
+        { id: 'open', name: 'Свободный ответ' }
       ]
     }
   },
