@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <TheHeading />
-    <div class="container">
+    <div class="container" style="width: 700px">
       <div class="box">
         <QuestionForm />
       </div>

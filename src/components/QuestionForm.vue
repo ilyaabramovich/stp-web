@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <form action>
     <b-field>
       <b-select
         placeholder="Выберите главу"
@@ -112,30 +112,31 @@
     </b-field>
 
     <b-field grouped>
-      <b-field label="Тип вопроса">
-        <b-select placeholder="Выберите тип" v-model="question.typeAnswer">
-          <option
-            v-for="typeAnswer in typeAnswers"
-            :key="typeAnswer.id"
-            :value="typeAnswer.id"
-            >{{ typeAnswer.name }}</option
-          >
-        </b-select>
-      </b-field>
-
-      <b-field label="Сложность">
-        <b-select
-          placeholder="Выберите сложность"
-          v-model.number="question.difficulty"
+      <b-select
+        placeholder="Выберите тип вопроса"
+        v-model="question.typeAnswer"
+        expanded
+      >
+        <option
+          v-for="typeAnswer in typeAnswers"
+          :key="typeAnswer.id"
+          :value="typeAnswer.id"
+          >{{ typeAnswer.name }}</option
         >
-          <option
-            v-for="difficulty in difficulties"
-            :key="difficulty.id"
-            :value="difficulty.id"
-            >{{ difficulty.name }}</option
-          >
-        </b-select>
-      </b-field>
+      </b-select>
+
+      <b-select
+        placeholder="Выберите сложность"
+        v-model.number="question.difficulty"
+        expanded
+      >
+        <option
+          v-for="difficulty in difficulties"
+          :key="difficulty.id"
+          :value="difficulty.id"
+          >{{ difficulty.name }}</option
+        >
+      </b-select>
     </b-field>
 
     <b-field label="Вопрос">
@@ -185,7 +186,7 @@
         </button>
       </p>
     </b-field>
-  </section>
+  </form>
 </template>
 
 <script>
@@ -253,6 +254,10 @@ export default {
     },
     onSubmit() {
       this.addQuestion(this.question)
+      this.$toast.open({
+        message: 'Вопрос успешно добавлен!',
+        type: 'is-success'
+      })
       this.question = this.createFreshQuestionObject()
     },
     createChapter(name) {
