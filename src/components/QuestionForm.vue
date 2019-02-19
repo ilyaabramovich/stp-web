@@ -106,10 +106,10 @@
         expanded
       >
         <option
-          v-for="typeAnswer in typeAnswers"
-          :value="typeAnswer.id"
-          :key="typeAnswer.id"
-          >{{ typeAnswer.name }}</option
+          v-for="questionType in questionTypes"
+          :value="questionType.id"
+          :key="questionType.id"
+          >{{ questionType.type }}</option
         >
       </b-select>
       <b-select
@@ -184,10 +184,10 @@ export default {
   data() {
     return {
       question: this.createFreshQuestionObject(),
-      typeAnswers: [
-        { id: 'one', name: 'Один вариант ответа' },
-        { id: 'many', name: 'Несколько вариантов' },
-        { id: 'open', name: 'Свободный ответ' }
+      questionTypes: [
+        { id: 'one', type: 'Один вариант ответа' },
+        { id: 'many', type: 'Несколько вариантов' },
+        { id: 'open', type: 'Свободный ответ' }
       ]
     }
   },
