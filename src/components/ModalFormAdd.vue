@@ -6,7 +6,7 @@
       </header>
       <section class="modal-card-body">
         <b-field label="Введите название">
-          <b-input v-model="name"></b-input>
+          <b-input @input="updateValue"></b-input>
         </b-field>
       </section>
       <footer class="modal-card-foot">
@@ -23,21 +23,17 @@
 
 <script>
 export default {
-  name: 'ModalForm',
-  data() {
-    return {
-      name: ''
-    }
+  name: 'ModalFormAdd',
+  props: {
+    name: { type: String, default: '' }
   },
   methods: {
+    updateValue(value) {
+      this.$emit('input', value)
+    },
     onAdd() {
-      this.$emit('submit', this.name)
-      this.name = ''
+      this.$emit('submit')
       this.$parent.close()
-      this.$toast.open({
-        message: 'Успешно добавлено!',
-        type: 'is-success'
-      })
     }
   }
 }

@@ -169,13 +169,16 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import ModalForm from './ModalForm'
-import ModalFormUnit from './ModalFormUnit'
+import ModalFormAdd from './ModalFormAdd'
+import ModalFormAddUnit from './ModalFormAddUnit'
 
 export default {
   name: 'Form',
   data() {
     return {
+      modalFormAdd: {
+        name: ''
+      },
       question: this.createFreshQuestionObject(),
       questionTypes: [
         { id: 'one', type: 'Один вариант ответа' },
@@ -198,9 +201,13 @@ export default {
     chapterModal() {
       this.$modal.open({
         parent: this,
-        component: ModalForm,
+        component: ModalFormAdd,
         hasModalCard: true,
+        props: this.modalFormAdd,
         events: {
+          input: value => {
+            this.modalFormAdd.name = value
+          },
           submit: this.createChapter
         }
       })
@@ -208,9 +215,13 @@ export default {
     sectionModal() {
       this.$modal.open({
         parent: this,
-        component: ModalForm,
+        component: ModalFormAdd,
         hasModalCard: true,
+        props: this.modalFormAdd,
         events: {
+          input: value => {
+            this.modalFormAdd.name = value
+          },
           submit: this.createSection
         }
       })
@@ -218,9 +229,13 @@ export default {
     paragraphModal() {
       this.$modal.open({
         parent: this,
-        component: ModalForm,
+        component: ModalFormAdd,
         hasModalCard: true,
+        props: this.modalFormAdd,
         events: {
+          input: value => {
+            this.modalFormAdd.name = value
+          },
           submit: this.createParagraph
         }
       })
@@ -228,7 +243,7 @@ export default {
     unitModal() {
       this.$modal.open({
         parent: this,
-        component: ModalFormUnit,
+        component: ModalFormAddUnit,
         hasModalCard: true,
         events: {
           submit: this.createUnit
@@ -270,17 +285,38 @@ export default {
       })
       this.question = this.createFreshQuestionObject()
     },
-    createChapter(name) {
-      const chapter = { name }
+    createChapter() {
+      const chapter = { name: this.modalFormAdd.name }
+      this.modalFormAdd.name = ''
       this.addChapter(chapter)
+      this.$toast.open({
+        message: 'Успешно добавлено!',
+        type: 'is-success'
+      })
     },
-    createSection(name) {
-      const section = { name, chapterId: this.question.chapterId }
+    createSection() {
+      const section = {
+        name: this.modalFormAdd.name,
+        chapterId: this.question.chapterId
+      }
+      this.modalFormAdd.name = ''
       this.addSection(section)
+      this.$toast.open({
+        message: 'Успешно добавлено!',
+        type: 'is-success'
+      })
     },
-    createParagraph(name) {
-      const paragraph = { name, sectionId: this.question.sectionId }
+    createParagraph() {
+      const paragraph = {
+        name: this.modalFormAdd.name,
+        sectionId: this.question.sectionId
+      }
+      this.modalFormAdd.name = ''
       this.addParagraph(paragraph)
+      this.$toast.open({
+        message: 'Успешно добавлено!',
+        type: 'is-success'
+      })
     },
     createUnit(name, difficulty, hint) {
       const unit = {

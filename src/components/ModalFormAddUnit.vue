@@ -46,7 +46,7 @@
 
 <script>
 export default {
-  name: 'ModalFormUnit',
+  name: 'ModalFormAddUnit',
   data() {
     return {
       name: '',
