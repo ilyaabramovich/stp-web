@@ -152,14 +152,7 @@
       <p class="control">
         <button
           class="button is-primary"
-          :disabled="
-            !(
-              question.answer &&
-              question.name &&
-              question.unitId &&
-              question.hint
-            )
-          "
+          :disabled="isAddQuestionButtonDisabled"
           @click="onSubmit"
         >
           Добавить вопрос
@@ -191,16 +184,16 @@ export default {
       ]
     }
   },
+  computed: {
+    isAddQuestionButtonDisabled() {
+      const { answer, name, unitId, hint } = this.question
+      return !(answer && name && unitId && hint)
+    },
+    ...mapState(['chapters', 'sections', 'paragraphs', 'units', 'difficulties'])
+  },
   created() {
     this.fetchChapters()
   },
-  computed: mapState([
-    'chapters',
-    'sections',
-    'paragraphs',
-    'units',
-    'difficulties'
-  ]),
   methods: {
     chapterModal() {
       this.$modal.open({
