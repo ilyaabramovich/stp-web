@@ -12,10 +12,10 @@
         <b-field label="Сложность">
           <b-select placeholder="Выберите сложность" v-model="difficulty">
             <option
-              v-for="diff in difficulties"
-              :value="diff.id"
-              :key="diff.id"
-              >{{ diff.name }}</option
+              v-for="(diff, index) in difficulties"
+              :value="index + 1"
+              :key="index"
+              >{{ diff }}</option
             >
           </b-select>
         </b-field>
@@ -29,7 +29,9 @@
         </b-field>
       </section>
       <footer class="modal-card-foot">
-        <button class="button" @click="$parent.close()">Close</button>
+        <button type="button" class="button" @click="$parent.close()">
+          Close
+        </button>
         <button
           class="button is-primary"
           :disabled="!(name && difficulty && hint)"
@@ -55,7 +57,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$emit('on-submit', this.name, this.difficulty, this.hint)
+      this.$emit('submit', this.name, this.difficulty, this.hint)
       this.name = ''
       this.difficulty = null
       this.hint = ''

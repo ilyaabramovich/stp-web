@@ -11,11 +11,7 @@ export default new Vuex.Store({
     paragraphs: [],
     units: [],
     questions: [],
-    difficulties: [
-      { id: 1, name: 'Уровень 1' },
-      { id: 2, name: 'Уровень 2' },
-      { id: 3, name: 'Уровень 3' }
-    ]
+    difficulties: ['Уровень 1', 'Уровень 2', 'Уровень 3']
   },
   mutations: {
     ADD_CHAPTER(state, chapter) {

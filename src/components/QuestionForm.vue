@@ -15,16 +15,13 @@
         >
       </b-select>
       <p class="control">
-        <button class="button" @click="showModalChapter = true">
+        <button type="button" class="button" @click="chapterModal()">
           Добавить
         </button>
-        <b-modal :active.sync="showModalChapter" has-modal-card>
-          <modal-form @on-submit="createChapter"></modal-form>
-        </b-modal>
       </p>
     </b-field>
 
-    <b-field @on-submit="createSection">
+    <b-field @submit="createSection">
       <b-select
         placeholder="Выберите раздел"
         :disabled="!question.chapterId"
@@ -41,19 +38,17 @@
       </b-select>
       <p class="control">
         <button
+          type="button"
           class="button"
           :disabled="!question.chapterId"
-          @click="showModalSection = true"
+          @click="sectionModal()"
         >
           Добавить
         </button>
-        <b-modal :active.sync="showModalSection" has-modal-card>
-          <modal-form @on-submit="createSection"></modal-form>
-        </b-modal>
       </p>
     </b-field>
 
-    <b-field @on-submit="createParagraph">
+    <b-field @submit="createParagraph">
       <b-select
         placeholder="Выберите параграф"
         :disabled="!question.sectionId"
@@ -70,19 +65,17 @@
       </b-select>
       <p class="control">
         <button
+          type="button"
           class="button"
           :disabled="!question.sectionId"
-          @click="showModalParagraph = true"
+          @click="paragraphModal()"
         >
           Добавить
         </button>
-        <b-modal :active.sync="showModalParagraph" has-modal-card>
-          <modal-form @on-submit="createParagraph"></modal-form>
-        </b-modal>
       </p>
     </b-field>
 
-    <b-field @on-submit="createUnit">
+    <b-field @submit="createUnit">
       <b-select
         placeholder="Выберите задание"
         :disabled="!question.paragraphId"
@@ -95,13 +88,11 @@
         </option>
       </b-select>
       <p class="control">
-        <b-modal :active.sync="showModalUnit" has-modal-card>
-          <modal-form-unit @on-submit="createUnit"></modal-form-unit>
-        </b-modal>
         <button
+          type="button"
           class="button"
           :disabled="!question.paragraphId"
-          @click="showModalUnit = true"
+          @click="unitModal()"
         >
           Добавить
         </button>
@@ -127,10 +118,10 @@
         expanded
       >
         <option
-          v-for="difficulty in difficulties"
-          :value="difficulty.id"
-          :key="difficulty.id"
-          >{{ difficulty.name }}</option
+          v-for="(difficulty, index) in difficulties"
+          :value="index + 1"
+          :key="index"
+          >{{ difficulty }}</option
         >
       </b-select>
     </b-field>
@@ -190,16 +181,8 @@ import ModalFormUnit from './ModalFormUnit'
 
 export default {
   name: 'Form',
-  components: {
-    ModalForm,
-    ModalFormUnit
-  },
   data() {
     return {
-      showModalChapter: false,
-      showModalSection: false,
-      showModalParagraph: false,
-      showModalUnit: false,
       question: this.createFreshQuestionObject(),
       typeAnswers: [
         { id: 'one', name: 'Один вариант ответа' },
@@ -219,6 +202,46 @@ export default {
     'difficulties'
   ]),
   methods: {
+    chapterModal() {
+      this.$modal.open({
+        parent: this,
+        component: ModalForm,
+        hasModalCard: true,
+        events: {
+          submit: this.createChapter
+        }
+      })
+    },
+    sectionModal() {
+      this.$modal.open({
+        parent: this,
+        component: ModalForm,
+        hasModalCard: true,
+        events: {
+          submit: this.createSection
+        }
+      })
+    },
+    paragraphModal() {
+      this.$modal.open({
+        parent: this,
+        component: ModalForm,
+        hasModalCard: true,
+        events: {
+          submit: this.createParagraph
+        }
+      })
+    },
+    unitModal() {
+      this.$modal.open({
+        parent: this,
+        component: ModalFormUnit,
+        hasModalCard: true,
+        events: {
+          submit: this.createUnit
+        }
+      })
+    },
     ...mapActions([
       'fetchChapters',
       'fetchSections',

@@ -10,7 +10,9 @@
         </b-field>
       </section>
       <footer class="modal-card-foot">
-        <button class="button" @click="$parent.close()">Close</button>
+        <button type="button" class="button" @click="$parent.close()">
+          Close
+        </button>
         <button class="button is-primary" :disabled="!name" @click="onSubmit">
           Добавить
         </button>
@@ -29,7 +31,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$emit('on-submit', this.name)
+      this.$emit('submit', this.name)
       this.name = ''
       this.$parent.close()
       this.$toast.open({
