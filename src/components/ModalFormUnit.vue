@@ -23,18 +23,16 @@
         <b-field label="Подсказка">
           <b-input
             type="textarea"
-            v-model="hint"
             placeholder="Введите подсказку к заданию"
+            v-model="hint"
           ></b-input>
         </b-field>
       </section>
       <footer class="modal-card-foot">
-        <button class="button" type="button" @click="$parent.close()">
-          Close
-        </button>
+        <button class="button" @click="$parent.close()">Close</button>
         <button
-          :disabled="!(name && difficulty && hint)"
           class="button is-primary"
+          :disabled="!(name && difficulty && hint)"
           @click="onSubmit"
         >
           Добавить

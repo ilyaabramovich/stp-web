@@ -3,19 +3,19 @@
     <b-field>
       <b-select
         placeholder="Выберите главу"
-        @input="fetchSections(question.chapterId)"
         v-model.number="question.chapterId"
+        @input="fetchSections(question.chapterId)"
         expanded
       >
         <option
           v-for="chapter in chapters"
-          :key="chapter.id"
           :value="chapter.id"
+          :key="chapter.id"
           >{{ chapter.name }}</option
         >
       </b-select>
       <p class="control">
-        <button type="button" class="button" @click="showModalChapter = true">
+        <button class="button" @click="showModalChapter = true">
           Добавить
         </button>
         <b-modal :active.sync="showModalChapter" has-modal-card>
@@ -27,24 +27,23 @@
     <b-field @on-submit="createSection">
       <b-select
         placeholder="Выберите раздел"
+        :disabled="!question.chapterId"
         v-model.number="question.sectionId"
         @input="fetchParagraphs(question.sectionId)"
-        :disabled="!question.chapterId"
         expanded
       >
         <option
           v-for="section in sections"
-          :key="section.id"
           :value="section.id"
+          :key="section.id"
           >{{ section.name }}</option
         >
       </b-select>
       <p class="control">
         <button
-          type="button"
           class="button"
-          @click="showModalSection = true"
           :disabled="!question.chapterId"
+          @click="showModalSection = true"
         >
           Добавить
         </button>
@@ -57,24 +56,23 @@
     <b-field @on-submit="createParagraph">
       <b-select
         placeholder="Выберите параграф"
+        :disabled="!question.sectionId"
         v-model.number="question.paragraphId"
         @input="fetchUnits(question.paragraphId)"
-        :disabled="!question.sectionId"
         expanded
       >
         <option
           v-for="paragraph in paragraphs"
-          :key="paragraph.id"
           :value="paragraph.id"
+          :key="paragraph.id"
           >{{ paragraph.name }}</option
         >
       </b-select>
       <p class="control">
         <button
-          type="button"
           class="button"
-          @click="showModalParagraph = true"
           :disabled="!question.sectionId"
+          @click="showModalParagraph = true"
         >
           Добавить
         </button>
@@ -84,14 +82,14 @@
       </p>
     </b-field>
 
-    <b-field @on-submit="createUnit" :for-unit="true">
+    <b-field @on-submit="createUnit">
       <b-select
         placeholder="Выберите задание"
-        v-model.number="question.unitId"
         :disabled="!question.paragraphId"
+        v-model.number="question.unitId"
         expanded
       >
-        <option v-for="unit in units" :key="unit.id" :value="unit.id">
+        <option v-for="unit in units" :value="unit.id" :key="unit.id">
           {{ unit.name }} ({{ unit.hint }}) Сложность:
           {{ unit.difficulty }}
         </option>
@@ -101,10 +99,9 @@
           <modal-form-unit @on-submit="createUnit"></modal-form-unit>
         </b-modal>
         <button
-          type="button"
           class="button"
-          @click="showModalUnit = true"
           :disabled="!question.paragraphId"
+          @click="showModalUnit = true"
         >
           Добавить
         </button>
@@ -119,12 +116,11 @@
       >
         <option
           v-for="typeAnswer in typeAnswers"
-          :key="typeAnswer.id"
           :value="typeAnswer.id"
+          :key="typeAnswer.id"
           >{{ typeAnswer.name }}</option
         >
       </b-select>
-
       <b-select
         placeholder="Выберите сложность вопроса"
         v-model.number="question.difficulty"
@@ -132,8 +128,8 @@
       >
         <option
           v-for="difficulty in difficulties"
-          :key="difficulty.id"
           :value="difficulty.id"
+          :key="difficulty.id"
           >{{ difficulty.name }}</option
         >
       </b-select>
@@ -141,15 +137,15 @@
 
     <b-field label="Вопрос">
       <b-input
-        placeholder="Введите текст вопроса"
         type="textarea"
+        placeholder="Введите текст вопроса"
         v-model.trim="question.name"
       ></b-input>
     </b-field>
     <b-field label="Подсказка">
       <b-input
-        placeholder="Введите подсказку к вопросу"
         type="textarea"
+        placeholder="Введите подсказку к вопросу"
         v-model.trim="question.hint"
       ></b-input>
     </b-field>
@@ -165,7 +161,6 @@
       <p class="control">
         <button
           class="button is-primary"
-          type="button"
           :disabled="
             !(
               question.answer &&
@@ -180,11 +175,7 @@
         </button>
       </p>
       <p class="control">
-        <button
-          class="button is-primary is-outlined"
-          type="button"
-          @click="fetchTests"
-        >
+        <button class="button is-primary is-outlined" @click="fetchTests">
           Сгенерировать тест .json
         </button>
       </p>

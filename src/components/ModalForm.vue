@@ -6,14 +6,12 @@
       </header>
       <section class="modal-card-body">
         <b-field label="Введите название">
-          <b-input v-model="name" required></b-input>
+          <b-input v-model="name"></b-input>
         </b-field>
       </section>
       <footer class="modal-card-foot">
-        <button class="button" type="button" @click="$parent.close()">
-          Close
-        </button>
-        <button :disabled="!name" class="button is-primary" @click="onSubmit">
+        <button class="button" @click="$parent.close()">Close</button>
+        <button class="button is-primary" :disabled="!name" @click="onSubmit">
           Добавить
         </button>
       </footer>
