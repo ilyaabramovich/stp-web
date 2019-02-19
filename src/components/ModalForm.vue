@@ -11,9 +11,9 @@
       </section>
       <footer class="modal-card-foot">
         <button type="button" class="button" @click="$parent.close()">
-          Close
+          Закрыть
         </button>
-        <button class="button is-primary" :disabled="!name" @click="onSubmit">
+        <button class="button is-primary" :disabled="!name" @click="onAdd">
           Добавить
         </button>
       </footer>
@@ -30,7 +30,7 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
+    onAdd() {
       this.$emit('submit', this.name)
       this.name = ''
       this.$parent.close()

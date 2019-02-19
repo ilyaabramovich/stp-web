@@ -30,12 +30,12 @@
       </section>
       <footer class="modal-card-foot">
         <button type="button" class="button" @click="$parent.close()">
-          Close
+          Закрыть
         </button>
         <button
           class="button is-primary"
           :disabled="!(name && difficulty && hint)"
-          @click="onSubmit"
+          @click="onUnitAdd"
         >
           Добавить
         </button>
@@ -56,7 +56,7 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
+    onUnitAdd() {
       this.$emit('submit', this.name, this.difficulty, this.hint)
       this.name = ''
       this.difficulty = null

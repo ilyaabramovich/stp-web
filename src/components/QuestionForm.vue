@@ -126,14 +126,14 @@
       </b-select>
     </b-field>
 
-    <b-field label="Вопрос">
+    <b-field>
       <b-input
         type="textarea"
         placeholder="Введите текст вопроса"
         v-model.trim="question.name"
       ></b-input>
     </b-field>
-    <b-field label="Подсказка">
+    <b-field>
       <b-input
         type="textarea"
         placeholder="Введите подсказку к вопросу"
@@ -153,7 +153,7 @@
         <button
           class="button is-primary"
           :disabled="isAddQuestionButtonDisabled"
-          @click="onSubmit"
+          @click="addQuestion"
         >
           Добавить вопрос
         </button>
@@ -240,10 +240,10 @@ export default {
       'fetchSections',
       'fetchParagraphs',
       'fetchUnits',
-      'fetchTests'
+      'fetchTests',
+      'createQuestion'
     ]),
     ...mapActions({
-      addQuestion: 'createQuestion',
       addChapter: 'createChapter',
       addSection: 'createSection',
       addParagraph: 'createParagraph',
@@ -262,8 +262,8 @@ export default {
         answer: ''
       }
     },
-    onSubmit() {
-      this.addQuestion(this.question)
+    addQuestion() {
+      this.createQuestion(this.question)
       this.$toast.open({
         message: 'Вопрос успешно добавлен!',
         type: 'is-success'
