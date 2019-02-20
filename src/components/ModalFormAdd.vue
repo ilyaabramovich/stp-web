@@ -1,11 +1,11 @@
 <template>
-  <form action>
+  <form @submit.prevent="submit">
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">Добавление</p>
       </header>
       <section class="modal-card-body">
-        <b-field label="Введите название">
+        <b-field :type="fieldType" label="Введите название">
           <b-input
             :value="name"
             @input="updateValue"
@@ -13,11 +13,7 @@
           />
         </b-field>
         <div v-if="$v.name.$error">
-          <b-message
-            auto-close
-            v-if="!$v.name.required"
-            type="is-danger"
-            size="is-small"
+          <b-message v-if="!$v.name.required" type="is-danger" size="is-small"
             >Name is required</b-message
           >
         </div>
@@ -26,14 +22,12 @@
         <button type="button" class="button" @click="$parent.close()">
           Закрыть
         </button>
-        <button
-          type="button"
-          class="button is-primary"
-          :disabled="!$v.name.required"
-          @click="onAdd"
-        >
+        <button :disabled="$v.$invalid" type="submit" class="button is-primary">
           Добавить
         </button>
+        <b-message v-if="$v.$anyError" type="is-danger" size="is-small"
+          >Please fill out the required fields</b-message
+        >
       </footer>
     </div>
   </form>
@@ -48,6 +42,12 @@ export default {
     name: { type: String, default: '', required: true }
   },
 
+  computed: {
+    fieldType() {
+      return this.$v.name.$error ? 'is-danger' : 'text'
+    }
+  },
+
   validations: {
     name: {
       required
@@ -59,9 +59,12 @@ export default {
       this.$emit('input', value)
     },
 
-    onAdd() {
-      this.$emit('submit')
-      this.$parent.close()
+    submit() {
+      this.$v.$touch()
+      if (!this.$v.$invalid) {
+        this.$emit('submit')
+        this.$parent.close()
+      }
     }
   }
 }
