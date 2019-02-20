@@ -21,7 +21,7 @@
       </p>
     </b-field>
 
-    <b-field @submit="createSection">
+    <b-field>
       <b-select
         placeholder="Выберите раздел"
         :disabled="!question.chapterId"
@@ -48,7 +48,7 @@
       </p>
     </b-field>
 
-    <b-field @submit="createParagraph">
+    <b-field>
       <b-select
         placeholder="Выберите параграф"
         :disabled="!question.sectionId"
@@ -75,7 +75,7 @@
       </p>
     </b-field>
 
-    <b-field @submit="createUnit">
+    <b-field>
       <b-select
         placeholder="Выберите задание"
         :disabled="!question.paragraphId"
@@ -131,21 +131,22 @@
         type="textarea"
         placeholder="Введите текст вопроса"
         v-model.trim="question.name"
-      ></b-input>
+      />
     </b-field>
+
     <b-field>
       <b-input
         type="textarea"
         placeholder="Введите подсказку к вопросу"
         v-model.trim="question.hint"
-      ></b-input>
+      />
     </b-field>
 
     <b-field>
       <b-input
         placeholder="Введите правильный ответ"
         v-model.trim="question.answer"
-      ></b-input>
+      />
     </b-field>
 
     <b-field grouped>
@@ -179,6 +180,7 @@ import ModalFormAddUnit from '@/components/ModalFormAddUnit'
 
 export default {
   name: 'Form',
+
   data() {
     return {
       modalFormAdd: {
@@ -192,6 +194,7 @@ export default {
       ]
     }
   },
+
   computed: {
     isAddQuestionButtonDisabled() {
       const { answer, name, unitId, hint } = this.question
@@ -199,9 +202,11 @@ export default {
     },
     ...mapState(['chapters', 'sections', 'paragraphs', 'units', 'difficulties'])
   },
+
   created() {
     this.fetchChapters()
   },
+
   methods: {
     chapterModal() {
       this.$modal.open({
@@ -217,6 +222,7 @@ export default {
         }
       })
     },
+
     sectionModal() {
       this.$modal.open({
         parent: this,
@@ -231,6 +237,7 @@ export default {
         }
       })
     },
+
     paragraphModal() {
       this.$modal.open({
         parent: this,
@@ -245,6 +252,7 @@ export default {
         }
       })
     },
+
     unitModal() {
       this.$modal.open({
         parent: this,
@@ -255,6 +263,7 @@ export default {
         }
       })
     },
+
     ...mapActions([
       'fetchChapters',
       'fetchSections',
@@ -263,12 +272,14 @@ export default {
       'fetchTests',
       'createQuestion'
     ]),
+
     ...mapActions({
       addChapter: 'createChapter',
       addSection: 'createSection',
       addParagraph: 'createParagraph',
       addUnit: 'createUnit'
     }),
+
     createFreshQuestionObject() {
       return {
         chapterId: null,
@@ -282,6 +293,7 @@ export default {
         answer: ''
       }
     },
+
     addQuestion() {
       this.createQuestion(this.question)
         .then(() => {
@@ -293,6 +305,7 @@ export default {
         type: 'is-success'
       })
     },
+
     createChapter() {
       const chapter = { name: this.modalFormAdd.name }
       this.addChapter(chapter)
@@ -301,6 +314,7 @@ export default {
         })
         .catch(() => {})
     },
+
     createSection() {
       const section = {
         name: this.modalFormAdd.name,
@@ -312,6 +326,7 @@ export default {
         })
         .catch(() => {})
     },
+
     createParagraph() {
       const paragraph = {
         name: this.modalFormAdd.name,
@@ -323,6 +338,7 @@ export default {
         })
         .catch(() => {})
     },
+
     createUnit(name, difficulty, hint) {
       const unit = {
         name,

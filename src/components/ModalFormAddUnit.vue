@@ -6,7 +6,7 @@
       </header>
       <section class="modal-card-body">
         <b-field label="Введите название">
-          <b-input v-model="name"></b-input>
+          <b-input v-model="name" />
         </b-field>
 
         <b-field label="Сложность">
@@ -25,7 +25,7 @@
             type="textarea"
             placeholder="Введите подсказку к заданию"
             v-model="hint"
-          ></b-input>
+          />
         </b-field>
       </section>
       <footer class="modal-card-foot">
@@ -48,6 +48,7 @@
 <script>
 export default {
   name: 'ModalFormAddUnit',
+
   data() {
     return {
       name: '',
@@ -56,6 +57,7 @@ export default {
       difficulties: this.$store.state.difficulties
     }
   },
+
   methods: {
     onUnitAdd() {
       this.$emit('submit', this.name, this.difficulty, this.hint)
