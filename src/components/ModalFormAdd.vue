@@ -5,18 +5,21 @@
         <p class="modal-card-title">Добавление</p>
       </header>
       <section class="modal-card-body">
-        <b-field :type="fieldType" label="Введите название">
+        <b-field
+          :type="{ 'is-danger': this.$v.name.$error }"
+          label="Введите название"
+        >
           <b-input
             :value="name"
             @input="updateValue"
             @blur="$v.name.$touch()"
           />
         </b-field>
-        <div v-if="$v.name.$error">
+        <template v-if="$v.name.$error">
           <b-message v-if="!$v.name.required" type="is-danger" size="is-small"
             >Name is required</b-message
           >
-        </div>
+        </template>
       </section>
       <footer class="modal-card-foot">
         <button type="button" class="button" @click="$parent.close()">
@@ -40,12 +43,6 @@ export default {
 
   props: {
     name: { type: String, default: '', required: true }
-  },
-
-  computed: {
-    fieldType() {
-      return this.$v.name.$error ? 'is-danger' : 'text'
-    }
   },
 
   validations: {

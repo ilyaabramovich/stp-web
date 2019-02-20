@@ -339,14 +339,8 @@ export default {
         .catch(() => {})
     },
 
-    createUnit(name, difficulty, hint) {
-      const unit = {
-        name,
-        paragraphId: this.question.paragraphId,
-        difficulty,
-        hint
-      }
-      this.addUnit(unit)
+    createUnit(unit) {
+      this.addUnit({ ...unit, paragraphId: this.question.paragraphId })
     }
   }
 }
