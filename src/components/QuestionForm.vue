@@ -151,6 +151,7 @@
     <b-field grouped>
       <p class="control">
         <button
+          type="button"
           class="button is-primary"
           :disabled="isAddQuestionButtonDisabled"
           @click="addQuestion"
@@ -159,7 +160,11 @@
         </button>
       </p>
       <p class="control">
-        <button class="button is-primary is-outlined" @click="fetchTests">
+        <button
+          type="button"
+          class="button is-primary is-outlined"
+          @click="fetchTests"
+        >
           Сгенерировать тест .json
         </button>
       </p>
@@ -169,8 +174,8 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import ModalFormAdd from './ModalFormAdd'
-import ModalFormAddUnit from './ModalFormAddUnit'
+import ModalFormAdd from '@/components/ModalFormAdd'
+import ModalFormAddUnit from '@/components/ModalFormAddUnit'
 
 export default {
   name: 'Form',
@@ -279,44 +284,44 @@ export default {
     },
     addQuestion() {
       this.createQuestion(this.question)
+        .then(() => {
+          this.question = this.createFreshQuestionObject()
+        })
+        .catch(() => {})
       this.$toast.open({
         message: 'Вопрос успешно добавлен!',
         type: 'is-success'
       })
-      this.question = this.createFreshQuestionObject()
     },
     createChapter() {
       const chapter = { name: this.modalFormAdd.name }
-      this.modalFormAdd.name = ''
       this.addChapter(chapter)
-      this.$toast.open({
-        message: 'Успешно добавлено!',
-        type: 'is-success'
-      })
+        .then(() => {
+          this.modalFormAdd.name = ''
+        })
+        .catch(() => {})
     },
     createSection() {
       const section = {
         name: this.modalFormAdd.name,
         chapterId: this.question.chapterId
       }
-      this.modalFormAdd.name = ''
       this.addSection(section)
-      this.$toast.open({
-        message: 'Успешно добавлено!',
-        type: 'is-success'
-      })
+        .then(() => {
+          this.modalFormAdd.name = ''
+        })
+        .catch(() => {})
     },
     createParagraph() {
       const paragraph = {
         name: this.modalFormAdd.name,
         sectionId: this.question.sectionId
       }
-      this.modalFormAdd.name = ''
       this.addParagraph(paragraph)
-      this.$toast.open({
-        message: 'Успешно добавлено!',
-        type: 'is-success'
-      })
+        .then(() => {
+          this.modalFormAdd.name = ''
+        })
+        .catch(() => {})
     },
     createUnit(name, difficulty, hint) {
       const unit = {

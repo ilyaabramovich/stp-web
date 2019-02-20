@@ -6,14 +6,19 @@
       </header>
       <section class="modal-card-body">
         <b-field label="Введите название">
-          <b-input @input="updateValue"></b-input>
+          <b-input :value="name" @input="updateValue"></b-input>
         </b-field>
       </section>
       <footer class="modal-card-foot">
         <button type="button" class="button" @click="$parent.close()">
           Закрыть
         </button>
-        <button class="button is-primary" :disabled="!name" @click="onAdd">
+        <button
+          type="button"
+          class="button is-primary"
+          :disabled="!name"
+          @click="onAdd"
+        >
           Добавить
         </button>
       </footer>
@@ -25,7 +30,7 @@
 export default {
   name: 'ModalFormAdd',
   props: {
-    name: { type: String, default: '' }
+    name: { type: String, default: '', required: true }
   },
   methods: {
     updateValue(value) {

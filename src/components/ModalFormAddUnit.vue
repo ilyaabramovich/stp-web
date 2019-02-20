@@ -33,6 +33,7 @@
           Закрыть
         </button>
         <button
+          type="button"
           class="button is-primary"
           :disabled="!(name && difficulty && hint)"
           @click="onUnitAdd"
@@ -62,10 +63,6 @@ export default {
       this.difficulty = null
       this.hint = ''
       this.$parent.close()
-      this.$toast.open({
-        message: 'Успешно добавлено!',
-        type: 'is-success'
-      })
     }
   }
 }
