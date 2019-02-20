@@ -6,8 +6,21 @@
       </header>
       <section class="modal-card-body">
         <b-field label="Введите название">
-          <b-input :value="name" @input="updateValue" />
+          <b-input
+            :value="name"
+            @input="updateValue"
+            @blur="$v.name.$touch()"
+          />
         </b-field>
+        <div v-if="$v.name.$error">
+          <b-message
+            auto-close
+            v-if="!$v.name.required"
+            type="is-danger"
+            size="is-small"
+            >Name is required</b-message
+          >
+        </div>
       </section>
       <footer class="modal-card-foot">
         <button type="button" class="button" @click="$parent.close()">
@@ -16,7 +29,7 @@
         <button
           type="button"
           class="button is-primary"
-          :disabled="!name"
+          :disabled="!$v.name.required"
           @click="onAdd"
         >
           Добавить
@@ -27,11 +40,18 @@
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators'
 export default {
   name: 'ModalFormAdd',
 
   props: {
     name: { type: String, default: '', required: true }
+  },
+
+  validations: {
+    name: {
+      required
+    }
   },
 
   methods: {
