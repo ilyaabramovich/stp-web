@@ -1,5 +1,5 @@
 <template>
-  <form action>
+  <form @submit.prevent="submit">
     <b-field>
       <b-select
         placeholder="Выберите главу"
@@ -152,10 +152,9 @@
     <b-field grouped>
       <p class="control">
         <button
-          type="button"
+          type="submit"
           class="button is-primary"
           :disabled="isAddQuestionButtonDisabled"
-          @click="addQuestion"
         >
           Добавить вопрос
         </button>
@@ -294,16 +293,12 @@ export default {
       }
     },
 
-    addQuestion() {
+    submit() {
       this.createQuestion(this.question)
         .then(() => {
           this.question = this.createFreshQuestionObject()
         })
         .catch(() => {})
-      this.$toast.open({
-        message: 'Вопрос успешно добавлен!',
-        type: 'is-success'
-      })
     },
 
     createChapter() {
