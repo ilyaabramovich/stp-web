@@ -9,11 +9,7 @@
           :type="{ 'is-danger': this.$v.name.$error }"
           label="Введите название"
         >
-          <b-input
-            :value="name"
-            @input="updateValue"
-            @blur="$v.name.$touch()"
-          />
+          <b-input v-model="name" @blur="$v.name.$touch()" />
         </b-field>
         <template v-if="$v.name.$error">
           <b-message v-if="!$v.name.required" type="is-danger" size="is-small"
@@ -41,8 +37,8 @@ import { required } from 'vuelidate/lib/validators'
 export default {
   name: 'ModalFormAdd',
 
-  props: {
-    name: { type: String, default: '', required: true }
+  data() {
+    return { name: '' }
   },
 
   validations: {
@@ -52,14 +48,11 @@ export default {
   },
 
   methods: {
-    updateValue(value) {
-      this.$emit('input', value)
-    },
-
     submit() {
       this.$v.$touch()
       if (!this.$v.$invalid) {
-        this.$emit('submit')
+        this.$emit('submit', this.name)
+        this.name = ''
         this.$parent.close()
       }
     }

@@ -182,9 +182,6 @@ export default {
 
   data() {
     return {
-      modalFormAdd: {
-        name: ''
-      },
       question: this.createFreshQuestionObject(),
       questionTypes: [
         { id: 'one', type: 'Один вариант ответа' },
@@ -212,11 +209,7 @@ export default {
         parent: this,
         component: ModalFormAdd,
         hasModalCard: true,
-        props: this.modalFormAdd,
         events: {
-          input: value => {
-            this.modalFormAdd.name = value
-          },
           submit: this.createChapter
         }
       })
@@ -227,11 +220,7 @@ export default {
         parent: this,
         component: ModalFormAdd,
         hasModalCard: true,
-        props: this.modalFormAdd,
         events: {
-          input: value => {
-            this.modalFormAdd.name = value
-          },
           submit: this.createSection
         }
       })
@@ -242,11 +231,7 @@ export default {
         parent: this,
         component: ModalFormAdd,
         hasModalCard: true,
-        props: this.modalFormAdd,
         events: {
-          input: value => {
-            this.modalFormAdd.name = value
-          },
           submit: this.createParagraph
         }
       })
@@ -301,37 +286,25 @@ export default {
         .catch(() => {})
     },
 
-    createChapter() {
-      const chapter = { name: this.modalFormAdd.name }
+    createChapter(name) {
+      const chapter = { name }
       this.addChapter(chapter)
-        .then(() => {
-          this.modalFormAdd.name = ''
-        })
-        .catch(() => {})
     },
 
-    createSection() {
+    createSection(name) {
       const section = {
-        name: this.modalFormAdd.name,
+        name,
         chapterId: this.question.chapterId
       }
       this.addSection(section)
-        .then(() => {
-          this.modalFormAdd.name = ''
-        })
-        .catch(() => {})
     },
 
-    createParagraph() {
+    createParagraph(name) {
       const paragraph = {
-        name: this.modalFormAdd.name,
+        name,
         sectionId: this.question.sectionId
       }
       this.addParagraph(paragraph)
-        .then(() => {
-          this.modalFormAdd.name = ''
-        })
-        .catch(() => {})
     },
 
     createUnit(unit) {
