@@ -1,4 +1,4 @@
-<template>
+<template functional>
   <section class="section">
     <header class="containter">
       <h1 class="title has-text-centered">
