@@ -51,16 +51,14 @@ export default new Vuex.Store({
           commit('ADD_CHAPTER', chapter)
           const notification = {
             type: 'success',
-            message: `Your chapter has been created!`
+            message: `Глава успешно создана`
           }
           dispatch('notification/add', notification, { root: true })
         })
         .catch(error => {
           const notification = {
             type: 'error',
-            message: `There was a problem creating your chapter: ${
-              error.message
-            }`
+            message: `Ошибка при создании chapter: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
           throw error
@@ -74,7 +72,7 @@ export default new Vuex.Store({
         .catch(error => {
           const notification = {
             type: 'error',
-            message: `There was a problem fetching chapters: ${error.message}`
+            message: `Ошибка при получении глав: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
         })
@@ -85,16 +83,14 @@ export default new Vuex.Store({
           commit('ADD_SECTION', section)
           const notification = {
             type: 'success',
-            message: `Your section has been created!`
+            message: `Раздел успешно создан`
           }
           dispatch('notification/add', notification, { root: true })
         })
         .catch(error => {
           const notification = {
             type: 'error',
-            message: `There was a problem creating your section: ${
-              error.message
-            }`
+            message: `Ошибка при создании раздела: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
           throw error
@@ -108,7 +104,7 @@ export default new Vuex.Store({
         .catch(error => {
           const notification = {
             type: 'error',
-            message: `There was a problem fetching sections: ${error.message}`
+            message: `Ошибка при получении разделов: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
         })
@@ -119,16 +115,14 @@ export default new Vuex.Store({
           commit('ADD_PARAGRAPH', paragraph)
           const notification = {
             type: 'success',
-            message: `Your paragraph has been created!`
+            message: `Параграф успешно создан`
           }
           dispatch('notification/add', notification, { root: true })
         })
         .catch(error => {
           const notification = {
             type: 'error',
-            message: `There was a problem creating your paragraph: ${
-              error.message
-            }`
+            message: `Ошибка при создании параграфа: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
           throw error
@@ -142,7 +136,7 @@ export default new Vuex.Store({
         .catch(error => {
           const notification = {
             type: 'error',
-            message: `There was a problem fetching paragraphs: ${error.message}`
+            message: `Ошибка при получении параграфов: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
         })
@@ -153,14 +147,14 @@ export default new Vuex.Store({
           commit('ADD_UNIT', unit)
           const notification = {
             type: 'success',
-            message: `Your unit has been created!`
+            message: `Задание успешно создано`
           }
           dispatch('notification/add', notification, { root: true })
         })
         .catch(error => {
           const notification = {
             type: 'error',
-            message: `There was a problem creating your unit: ${error.message}`
+            message: `Ошибка при создании задания: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
         })
@@ -173,7 +167,7 @@ export default new Vuex.Store({
         .catch(error => {
           const notification = {
             type: 'error',
-            message: `There was a problem fetching chapters: ${error.message}`
+            message: `Ошибка при получении глав: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
         })
@@ -184,16 +178,14 @@ export default new Vuex.Store({
           commit('ADD_QUESTION', question)
           const notification = {
             type: 'success',
-            message: `Your question has been created!`
+            message: `Вопрос успешно создан`
           }
           dispatch('notification/add', notification, { root: true })
         })
         .catch(error => {
           const notification = {
             type: 'error',
-            message: `There was a problem creating your question: ${
-              error.message
-            }`
+            message: `Ошибка при создании вопроса: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
           throw error
@@ -207,7 +199,7 @@ export default new Vuex.Store({
         .catch(error => {
           const notification = {
             type: 'error',
-            message: `There was a problem fetching tests: ${error.message}`
+            message: `Ошибка при получении теста: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
         })
