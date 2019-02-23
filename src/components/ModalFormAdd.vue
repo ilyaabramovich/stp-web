@@ -13,7 +13,7 @@
         </b-field>
         <template v-if="$v.name.$error">
           <b-message v-if="!$v.name.required" type="is-danger" size="is-small"
-            >Name is required</b-message
+            >Обязательное поле</b-message
           >
         </template>
       </section>
@@ -25,7 +25,7 @@
           Добавить
         </button>
         <b-message v-if="$v.$anyError" type="is-danger" size="is-small"
-          >Please fill out the required fields</b-message
+          >Пожалуйста заполните все обязательные поля</b-message
         >
       </footer>
     </div>

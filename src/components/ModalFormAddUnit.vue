@@ -16,7 +16,7 @@
             v-if="!$v.unit.name.required"
             type="is-danger"
             size="is-small"
-            >Name is required</b-message
+            >Обязательное поле</b-message
           >
         </template>
 
@@ -42,7 +42,7 @@
             v-if="!$v.unit.difficulty.required"
             type="is-danger"
             size="is-small"
-            >Difficulty is required</b-message
+            >Обязательное поле</b-message
           >
         </template>
 
@@ -62,7 +62,7 @@
             v-if="!$v.unit.hint.required"
             type="is-danger"
             size="is-small"
-            >Hint is required</b-message
+            >Обязательное поле</b-message
           >
         </template>
       </section>
@@ -74,7 +74,7 @@
           Добавить
         </button>
         <b-message v-if="$v.$anyError" type="is-danger" size="is-small"
-          >Please fill out the required fields</b-message
+          >Пожалуйста заполните все обязательные поля</b-message
         >
       </footer>
     </div>
