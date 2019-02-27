@@ -16,7 +16,7 @@
         >
       </b-select>
       <p class="control">
-        <button type="button" class="button" @click="chapterModal()">
+        <button type="button" class="button" @click="openModal(createChapter)">
           Добавить
         </button>
       </p>
@@ -51,7 +51,7 @@
           type="button"
           class="button"
           :disabled="!question.chapterId"
-          @click="sectionModal()"
+          @click="openModal(createSection)"
         >
           Добавить
         </button>
@@ -87,7 +87,7 @@
           type="button"
           class="button"
           :disabled="!question.sectionId"
-          @click="paragraphModal()"
+          @click="openModal(createParagraph)"
         >
           Добавить
         </button>
@@ -266,7 +266,7 @@ import ModalFormAdd from '@/components/ModalFormAdd'
 import ModalFormAddUnit from '@/components/ModalFormAddUnit'
 
 export default {
-  name: 'Form',
+  name: 'QuestionForm',
 
   data() {
     return {
@@ -306,50 +306,19 @@ export default {
   },
 
   methods: {
-    chapterModal() {
+    openModal(submit, component = ModalFormAdd) {
       this.$modal.open({
         parent: this,
-        component: ModalFormAdd,
+        component,
         hasModalCard: true,
         events: {
-          submit: this.createChapter
+          submit
         }
       })
     },
-
-    sectionModal() {
-      this.$modal.open({
-        parent: this,
-        component: ModalFormAdd,
-        hasModalCard: true,
-        events: {
-          submit: this.createSection
-        }
-      })
-    },
-
-    paragraphModal() {
-      this.$modal.open({
-        parent: this,
-        component: ModalFormAdd,
-        hasModalCard: true,
-        events: {
-          submit: this.createParagraph
-        }
-      })
-    },
-
     unitModal() {
-      this.$modal.open({
-        parent: this,
-        component: ModalFormAddUnit,
-        hasModalCard: true,
-        events: {
-          submit: this.createUnit
-        }
-      })
+      this.openModal(this.createUnit, ModalFormAddUnit)
     },
-
     ...mapActions([
       'fetchChapters',
       'fetchSections',
