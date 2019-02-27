@@ -16,7 +16,7 @@
         >
       </b-select>
       <p class="control">
-        <button type="button" class="button" @click="openModal(createChapter)">
+        <button type="button" class="button" @click="openModal(addChapter)">
           Добавить
         </button>
       </p>
@@ -51,7 +51,7 @@
           type="button"
           class="button"
           :disabled="!question.chapterId"
-          @click="openModal(createSection)"
+          @click="openModal(addSection)"
         >
           Добавить
         </button>
@@ -87,7 +87,7 @@
           type="button"
           class="button"
           :disabled="!question.sectionId"
-          @click="openModal(createParagraph)"
+          @click="openModal(addParagraph)"
         >
           Добавить
         </button>
@@ -317,7 +317,7 @@ export default {
       })
     },
     unitModal() {
-      this.openModal(this.createUnit, ModalFormAddUnit)
+      this.openModal(this.addUnit, ModalFormAddUnit)
     },
     ...mapActions([
       'fetchChapters',
@@ -325,15 +325,12 @@ export default {
       'fetchParagraphs',
       'fetchUnits',
       'fetchTests',
-      'createQuestion'
+      'createQuestion',
+      'createChapter',
+      'createSection',
+      'createParagraph',
+      'createUnit'
     ]),
-
-    ...mapActions({
-      addChapter: 'createChapter',
-      addSection: 'createSection',
-      addParagraph: 'createParagraph',
-      addUnit: 'createUnit'
-    }),
 
     createFreshQuestionObject() {
       return {
@@ -360,29 +357,29 @@ export default {
       }
     },
 
-    createChapter(name) {
+    addChapter(name) {
       const chapter = { name }
-      this.addChapter(chapter)
+      this.createChapter(chapter)
     },
 
-    createSection(name) {
+    addSection(name) {
       const section = {
         name,
         chapterId: this.question.chapterId
       }
-      this.addSection(section)
+      this.createSection(section)
     },
 
-    createParagraph(name) {
+    addParagraph(name) {
       const paragraph = {
         name,
         sectionId: this.question.sectionId
       }
-      this.addParagraph(paragraph)
+      this.createParagraph(paragraph)
     },
 
-    createUnit(unit) {
-      this.addUnit({ ...unit, paragraphId: this.question.paragraphId })
+    addUnit(unit) {
+      this.createUnit({ ...unit, paragraphId: this.question.paragraphId })
     }
   }
 }
