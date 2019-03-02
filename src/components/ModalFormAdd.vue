@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submit">
+  <form @submit.prevent="handleSubmit">
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">Добавление</p>
@@ -48,7 +48,7 @@ export default {
   },
 
   methods: {
-    submit() {
+    handleSubmit() {
       this.$v.$touch()
       if (!this.$v.$invalid) {
         this.$emit('submit', this.name)

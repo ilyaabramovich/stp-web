@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submit">
+  <form @submit.prevent="handleSubmit">
     <b-field :type="{ 'is-danger': this.$v.question.chapterId.$error }">
       <b-select
         placeholder="Выберите главу"
@@ -346,7 +346,7 @@ export default {
       }
     },
 
-    submit() {
+    handleSubmit() {
       this.$v.$touch()
       if (!this.$v.$invalid) {
         this.createQuestion(this.question)
