@@ -158,6 +158,7 @@
       </b-select>
       <template v-if="$v.question.typeAnswer.$error">
         <b-message
+          class="control"
           v-if="!$v.question.typeAnswer.required"
           type="is-danger"
           size="is-small"
@@ -243,7 +244,11 @@
           Добавить вопрос
         </button>
       </p>
-      <b-message v-if="$v.$anyError" type="is-danger" size="is-small"
+      <b-message
+        class="control"
+        v-if="$v.$anyError"
+        type="is-danger"
+        size="is-small"
         >Пожалуйста заполните все обязательные поля</b-message
       >
       <p class="control">
