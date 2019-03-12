@@ -74,7 +74,7 @@
           Добавить
         </button>
         <b-message v-if="$v.$anyError" type="is-danger" size="is-small"
-          >Пожалуйста заполните все обязательные поля</b-message
+          >Заполните все обязательные поля</b-message
         >
       </footer>
     </div>
