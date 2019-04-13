@@ -17,13 +17,13 @@ export default {
     return apiClient.get('/tests')
   },
   getSections(chapterId) {
-    return apiClient.get(`/sections/?chapterId=${chapterId}`)
+    return apiClient.get(`/sections?chapterId=${chapterId}`)
   },
   getParagraphs(sectionId) {
-    return apiClient.get(`/paragraphs/?sectionId=${sectionId}`)
+    return apiClient.get(`/paragraphs?sectionId=${sectionId}`)
   },
   getUnits(paragraphId) {
-    return apiClient.get(`/units/?paragraphId=${paragraphId}`)
+    return apiClient.get(`/units?paragraphId=${paragraphId}`)
   },
   addQuestion(question) {
     return apiClient.post('/questions', question)
