@@ -2,7 +2,8 @@
   <b-notification
     @close="remove(notification)"
     auto-close
-    :type="notificationTypeClass"
+    duration="5000"
+    :type="notificationType"
     >{{ notification.message }}</b-notification
   >
 </template>
@@ -21,13 +22,7 @@ export default {
 
   computed: {
     notificationType() {
-      return this.notification.type === 'error'
-        ? 'danger'
-        : this.notification.type
-    },
-
-    notificationTypeClass() {
-      return `is-${this.notificationType}`
+      return `is-${this.notification.type}`
     }
   },
 

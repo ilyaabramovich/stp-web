@@ -57,7 +57,7 @@ export default new Vuex.Store({
         })
         .catch(error => {
           const notification = {
-            type: 'error',
+            type: 'danger',
             message: `Ошибка при создании chapter: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
@@ -71,7 +71,7 @@ export default new Vuex.Store({
         })
         .catch(error => {
           const notification = {
-            type: 'error',
+            type: 'danger',
             message: `Ошибка при получении глав: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
@@ -89,7 +89,7 @@ export default new Vuex.Store({
         })
         .catch(error => {
           const notification = {
-            type: 'error',
+            type: 'danger',
             message: `Ошибка при создании раздела: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
@@ -103,7 +103,7 @@ export default new Vuex.Store({
         })
         .catch(error => {
           const notification = {
-            type: 'error',
+            type: 'danger',
             message: `Ошибка при получении разделов: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
@@ -121,7 +121,7 @@ export default new Vuex.Store({
         })
         .catch(error => {
           const notification = {
-            type: 'error',
+            type: 'danger',
             message: `Ошибка при создании параграфа: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
@@ -135,7 +135,7 @@ export default new Vuex.Store({
         })
         .catch(error => {
           const notification = {
-            type: 'error',
+            type: 'danger',
             message: `Ошибка при получении параграфов: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
@@ -153,7 +153,7 @@ export default new Vuex.Store({
         })
         .catch(error => {
           const notification = {
-            type: 'error',
+            type: 'danger',
             message: `Ошибка при создании задания: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
@@ -166,7 +166,7 @@ export default new Vuex.Store({
         })
         .catch(error => {
           const notification = {
-            type: 'error',
+            type: 'danger',
             message: `Ошибка при получении глав: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
@@ -184,7 +184,7 @@ export default new Vuex.Store({
         })
         .catch(error => {
           const notification = {
-            type: 'error',
+            type: 'danger',
             message: `Ошибка при создании вопроса: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
@@ -198,7 +198,7 @@ export default new Vuex.Store({
         })
         .catch(error => {
           const notification = {
-            type: 'error',
+            type: 'danger',
             message: `Ошибка при получении теста: ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
