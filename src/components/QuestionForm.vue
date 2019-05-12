@@ -1,12 +1,12 @@
 <template>
-  <form @submit.prevent="handleSubmit">
-    <b-field :type="{ 'is-danger': this.$v.question.chapterId.$error }">
+  <form @submit.prevent="handleSubmit" action="/questions" method="post">
+    <b-field grouped>
       <b-select
         placeholder="Выберите главу"
         v-model.number="question.chapterId"
         @input="fetchSections(question.chapterId)"
         expanded
-        @blur="$v.question.chapterId.$touch()"
+        required
       >
         <option
           v-for="chapter in chapters"
@@ -21,23 +21,14 @@
         </button>
       </p>
     </b-field>
-    <template v-if="$v.question.chapterId.$error">
-      <b-message
-        v-if="!$v.question.chapterId.required"
-        type="is-danger"
-        size="is-small"
-        >Обязательное поле</b-message
-      >
-    </template>
-
-    <b-field :type="{ 'is-danger': this.$v.question.sectionId.$error }">
+    <b-field grouped>
       <b-select
         placeholder="Выберите раздел"
         :disabled="!question.chapterId"
         v-model.number="question.sectionId"
         @input="fetchParagraphs(question.sectionId)"
         expanded
-        @blur="$v.question.sectionId.$touch()"
+        required
       >
         <option
           v-for="section in sections"
@@ -57,23 +48,14 @@
         </button>
       </p>
     </b-field>
-    <template v-if="$v.question.sectionId.$error">
-      <b-message
-        v-if="!$v.question.sectionId.required"
-        type="is-danger"
-        size="is-small"
-        >Обязательное поле</b-message
-      >
-    </template>
-
-    <b-field :type="{ 'is-danger': this.$v.question.paragraphId.$error }">
+    <b-field grouped>
       <b-select
         placeholder="Выберите параграф"
         :disabled="!question.sectionId"
         v-model.number="question.paragraphId"
         @input="fetchUnits(question.paragraphId)"
         expanded
-        @blur="$v.question.paragraphId.$touch()"
+        required
       >
         <option
           v-for="paragraph in paragraphs"
@@ -93,22 +75,13 @@
         </button>
       </p>
     </b-field>
-    <template v-if="$v.question.paragraphId.$error">
-      <b-message
-        v-if="!$v.question.paragraphId.required"
-        type="is-danger"
-        size="is-small"
-        >Обязательное поле</b-message
-      >
-    </template>
-
-    <b-field :type="{ 'is-danger': this.$v.question.unitId.$error }">
+    <b-field grouped>
       <b-select
         placeholder="Выберите задание"
         :disabled="!question.paragraphId"
         v-model.number="question.unitId"
         expanded
-        @blur="$v.question.unitId.$touch()"
+        required
       >
         <option v-for="unit in units" :value="unit.id" :key="unit.id">
           {{ unit.name }} ({{ unit.hint }}) Сложность:
@@ -126,28 +99,12 @@
         </button>
       </p>
     </b-field>
-    <template v-if="$v.question.unitId.$error">
-      <b-message
-        v-if="!$v.question.unitId.required"
-        type="is-danger"
-        size="is-small"
-        >Обязательное поле</b-message
-      >
-    </template>
-
-    <b-field
-      :type="{
-        'is-danger':
-          this.$v.question.typeAnswer.$error ||
-          this.$v.question.difficulty.$error
-      }"
-      grouped
-    >
+    <b-field>
       <b-select
         placeholder="Выберите тип вопроса"
         v-model="question.typeAnswer"
         expanded
-        @blur="$v.question.typeAnswer.$touch()"
+        required
       >
         <option
           v-for="questionType in questionTypes"
@@ -156,101 +113,46 @@
           >{{ questionType.type }}</option
         >
       </b-select>
-      <template v-if="$v.question.typeAnswer.$error">
-        <b-message
-          class="control"
-          v-if="!$v.question.typeAnswer.required"
-          type="is-danger"
-          size="is-small"
-          >Обязательное поле</b-message
-        >
-      </template>
-      <b-select
-        placeholder="Выберите сложность вопроса"
-        v-model.number="question.difficulty"
-        expanded
-        @blur="$v.question.difficulty.$touch()"
-      >
-        <option
-          v-for="(difficulty, index) in difficulties"
-          :value="index + 1"
-          :key="index"
-          >{{ difficulty }}</option
-        >
-      </b-select>
-      <template v-if="$v.question.difficulty.$error">
-        <b-message
-          v-if="!$v.question.difficulty.required"
-          type="is-danger"
-          size="is-small"
-          >Обязательное поле</b-message
-        >
-      </template>
     </b-field>
-
-    <b-field :type="{ 'is-danger': this.$v.question.name.$error }">
+    <b-field>
+      <b-input
+        placeholder="Выберите сложность вопроса"
+        type="number"
+        min="1"
+        max="3"
+        required
+      >
+      </b-input>
+    </b-field>
+    <b-field>
       <b-input
         type="textarea"
         placeholder="Введите текст вопроса"
         v-model.trim="question.name"
-        @blur="$v.question.name.$touch()"
+        required
       />
     </b-field>
-    <template v-if="$v.question.name.$error">
-      <b-message
-        v-if="!$v.question.name.required"
-        type="is-danger"
-        size="is-small"
-        >Обязательное поле</b-message
-      >
-    </template>
-
-    <b-field :type="{ 'is-danger': this.$v.question.hint.$error }">
+    <b-field>
       <b-input
         type="textarea"
         placeholder="Введите подсказку к вопросу"
         v-model.trim="question.hint"
-        @blur="$v.question.hint.$touch()"
+        required
       />
     </b-field>
-    <template v-if="$v.question.hint.$error">
-      <b-message
-        v-if="!$v.question.hint.required"
-        type="is-danger"
-        size="is-small"
-        >Обязательное поле</b-message
-      >
-    </template>
-
-    <b-field :type="{ 'is-danger': this.$v.question.answer.$error }">
+    <b-field>
       <b-input
         placeholder="Введите правильный ответ"
         v-model.trim="question.answer"
-        @blur="$v.question.answer.$touch()"
+        required
       />
     </b-field>
-    <template v-if="$v.question.answer.$error">
-      <b-message
-        v-if="!$v.question.answer.required"
-        type="is-danger"
-        size="is-small"
-        >Обязательное поле</b-message
-      >
-    </template>
-
     <b-field grouped>
       <p class="control">
-        <button type="submit" class="button is-primary" :disabled="$v.$invalid">
+        <button type="submit" class="button is-primary">
           Добавить вопрос
         </button>
       </p>
-      <b-message
-        class="control"
-        v-if="$v.$anyError"
-        type="is-danger"
-        size="is-small"
-        >Заполните все обязательные поля</b-message
-      >
       <p class="control">
         <button
           type="button"
@@ -266,7 +168,6 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import { required } from 'vuelidate/lib/validators'
 import ModalFormAdd from '@/components/ModalFormAdd'
 import ModalFormAddUnit from '@/components/ModalFormAddUnit'
 
@@ -284,27 +185,7 @@ export default {
     }
   },
 
-  validations: {
-    question: {
-      chapterId: { required },
-      sectionId: { required },
-      paragraphId: { required },
-      unitId: { required },
-      typeAnswer: { required },
-      difficulty: { required },
-      name: { required },
-      hint: { required },
-      answer: { required }
-    }
-  },
-
-  computed: mapState([
-    'chapters',
-    'sections',
-    'paragraphs',
-    'units',
-    'difficulties'
-  ]),
+  computed: mapState(['chapters', 'sections', 'paragraphs', 'units']),
 
   created() {
     this.fetchChapters()
@@ -352,14 +233,11 @@ export default {
     },
 
     handleSubmit() {
-      this.$v.$touch()
-      if (!this.$v.$invalid) {
-        this.createQuestion(this.question)
-          .then(() => {
-            this.question = this.createFreshQuestionObject()
-          })
-          .catch(() => {})
-      }
+      this.createQuestion(this.question)
+        .then(() => {
+          this.question = this.createFreshQuestionObject()
+        })
+        .catch(() => {})
     },
 
     addChapter(name) {

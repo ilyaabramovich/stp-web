@@ -2,7 +2,6 @@
   <b-notification
     @close="remove(notification)"
     auto-close
-    duration="5000"
     :type="notificationType"
     >{{ notification.message }}</b-notification
   >
