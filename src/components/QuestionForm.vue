@@ -154,11 +154,7 @@
         </button>
       </p>
       <p class="control">
-        <button
-          type="button"
-          class="button is-primary is-outlined"
-          @click="fetchTests"
-        >
+        <button type="button" class="button" @click="fetchTests">
           Сгенерировать тест .json
         </button>
       </p>
